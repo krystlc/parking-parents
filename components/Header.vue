@@ -1,44 +1,39 @@
-<template>
-    <header>
-        <nav
-            class="fixed top-4 w-fit inset-x-0 flex z-500 bg-amber-100 rounded-full mx-auto"
-        >
-            <NuxtLink
-                v-for="link of links"
-                :to="link.path"
-                class="inline-flex items-center gap-1 py-2 px-4"
-                ><UIcon :name="link.icon" /> {{ link.label }}</NuxtLink
-            >
-        </nav>
-    </header>
-</template>
+<script setup lang="ts">
+import type { NavigationMenuItem } from "@nuxt/ui";
 
-<script setup>
-const links = [
+const items = ref<NavigationMenuItem[]>([
     {
         label: "Home",
         icon: "i-lucide-home",
-        path: "/",
+        to: "/",
     },
     {
         label: "Blog",
         icon: "i-lucide-trees",
-        path: "/blog",
+        to: "/blog",
     },
     {
         label: "Parks",
         icon: "i-lucide-map",
-        path: "/parks",
+        to: "/parks",
     },
     {
         label: "the Kit",
         icon: "i-lucide-backpack",
-        path: "/kit",
+        to: "/kit",
     },
     {
-        label: "About",
-        icon: "i-lucide-newspaper",
-        path: "/about",
+        label: "FAQ",
+        icon: "i-lucide-circle-help",
+        to: "/faq",
     },
-];
+]);
 </script>
+
+<template>
+    <UNavigationMenu
+        :items="items"
+        class="w-full justify-center"
+        color="info"
+    />
+</template>

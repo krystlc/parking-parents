@@ -2,6 +2,10 @@ import { defineCollection, defineContentConfig, z } from "@nuxt/content";
 
 export default defineContentConfig({
   collections: {
+    pages: defineCollection({
+      type: "page",
+      source: "pages/**.md",
+    }),
     parks: defineCollection({
       type: "page",
       source: "parks/**/index.md", // Only the main park files

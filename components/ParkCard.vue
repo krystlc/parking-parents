@@ -1,13 +1,13 @@
 <template>
-  <div>
-    <h3>
-      <NuxtLink :to="`/parks/${park.slug}`">{{ park.title }}</NuxtLink>
-    </h3>
-  </div>
+    <div>
+        <ULink :to="`/parks/${park.slug}`" variant="pill">{{
+            park.title
+        }}</ULink>
+    </div>
 </template>
 
 <script setup>
 defineProps({
-  park: Object
+    park: Object,
 });
 </script>
