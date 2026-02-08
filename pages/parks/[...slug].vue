@@ -6,9 +6,8 @@ const { data: post } = await useAsyncData(`parks-${slug}`, () => {
 </script>
 
 <template>
-    <main>
-        <article>
-            <!-- Render the blog post as Prose & Vue components -->
+    <main class="container mx-auto pt-24">
+        <article class="prose">
             <ContentRenderer :value="post" />
         </article>
     </main>
