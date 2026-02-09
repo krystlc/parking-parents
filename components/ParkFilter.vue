@@ -10,7 +10,6 @@
                         v-model="filters.searchQuery"
                         icon="i-heroicons-magnifying-glass-20-solid"
                         size="xl"
-                        color="white"
                         :trailing="false"
                         placeholder="Search by park name or neighborhood..."
                     />
@@ -65,12 +64,12 @@
                         :options="vibeOptions"
                         placeholder="What's the mood today?"
                     >
-                        <template #label>
+                        <!-- <template #label>
                             <span v-if="filters.vibe">{{
                                 filters.vibe.label
                             }}</span>
                             <span v-else>Choose a vibe</span>
-                        </template>
+                        </template> -->
                     </USelectMenu>
 
                     <div

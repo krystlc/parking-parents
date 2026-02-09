@@ -21,7 +21,8 @@
 </template>
 
 <script setup lang="ts">
+import { type ParkLocation } from "./types";
 const props = defineProps<{
-    locations: Location[];
+    locations: ParkLocation[];
 }>();
 </script>

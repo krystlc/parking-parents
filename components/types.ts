@@ -1,6 +1,6 @@
 import type { LatLngExpression } from "leaflet";
 
-export type Location = {
+export type ParkLocation = {
   name: string;
   latlng: LatLngExpression;
   path: string;
