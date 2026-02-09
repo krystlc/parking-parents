@@ -6,6 +6,7 @@ fenced: true
 shade: false
 restrooms: true
 terrain: paved
+latlng: [28.1140756, -82.3064378]
 ---
 
 # {{$doc.title}}

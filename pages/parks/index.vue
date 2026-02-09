@@ -1,14 +1,29 @@
 <template>
-    <ParkList />
-    <ParkMap :locations="locations" />
+    <!-- <aside>
+        <ParkFilter />
+    </aside> -->
+    <main class="flex h-screen">
+        <section class="max-w-lg">
+            <ULink v-for="park in parks" :key="park.slug" :to="park.path">
+                <ParkCard :park="park" />
+            </ULink>
+        </section>
+        <section class="flex-1">
+            <ParkMap
+                :locations="
+                    parks.map((p) => ({
+                        name: p.title,
+                        latlng: p.latlng,
+                        path: p.path,
+                    }))
+                "
+            />
+        </section>
+    </main>
 </template>
 
 <script setup lang="ts">
-const locations: Location[] = [
-    {
-        name: "Location A",
-        latlng: [28.1140756, -82.3064378],
-        popupContent: "<h1>Welcome to Location A</h1>",
-    },
-];
+const { data: parks, error } = await useAsyncData("parks", () => {
+    return queryCollection("parks").all();
+});
 </script>

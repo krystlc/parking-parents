@@ -22,11 +22,6 @@ const items = ref<NavigationMenuItem[]>([
         icon: "i-lucide-backpack",
         to: "/kit",
     },
-    {
-        label: "FAQ",
-        icon: "i-lucide-circle-help",
-        to: "/faq",
-    },
 ]);
 </script>
 

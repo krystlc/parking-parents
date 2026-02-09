@@ -1,5 +1,4 @@
 <template>
-    {{ locations }}
     <LMap
         style="height: 50vh"
         :zoom="12"
@@ -12,11 +11,11 @@
             layer-type="base"
             name="OpenStreetMap"
         />
-        <!-- Loop through locations to create markers -->
         <LMarker
-            v-for="(location, index) in locations"
+            v-for="(marker, index) in locations"
             :key="index"
-            :lat-lng="location.latlng"
+            :lat-lng="marker.latlng"
+            @click="$router.push(marker.path)"
         />
     </LMap>
 </template>

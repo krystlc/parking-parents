@@ -16,6 +16,7 @@ export default defineContentConfig({
         restrooms: z.boolean(),
         terrain: z.enum(["rubber", "woodchips", "paved"]),
         address: z.string(),
+        latlng: z.array(z.number()),
       }),
     }),
     updates: defineCollection({

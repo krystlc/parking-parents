@@ -7,7 +7,7 @@ const { data: post, error } = await useAsyncData(`parks-${slug}`, () => {
 
 <template>
     <main class="container mx-auto pt-24">
-        <article v-if="post" class="prose">
+        <article v-if="post">
             <ContentRenderer :value="post" />
         </article>
         <div v-else-if="error || !post" class="text-center py-24">
