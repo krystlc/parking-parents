@@ -1,16 +1,16 @@
 <template>
-    <div class="container max-w-sm mx-auto">
-        <ContentRenderer :value="home" />
-    </div>
+    <main class="container mx-auto">
+        <ContentRenderer :value="page" />
+    </main>
 </template>
 
 <script setup>
-const { data: home } = await useAsyncData("home", () => {
+const { data: page } = await useAsyncData("page-home", () => {
     return queryCollection("pages").path("/pages/home").first();
 });
 
 useSeoMeta({
-    title: home.value?.title,
-    description: home.value?.description,
+    title: page.value?.title,
+    description: page.value?.description,
 });
 </script>

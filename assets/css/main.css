@@ -1,2 +1,55 @@
 @import "tailwindcss";
 @import "@nuxt/ui";
+
+@utility prose {
+    & h1 {
+        @apply text-4xl font-extrabold tracking-tight mb-8 mt-4;
+    }
+    & h2 {
+        @apply text-2xl font-bold mt-10 mb-4 pb-2;
+    }
+    & h3 {
+        @apply text-xl font-semibold mt-8 mb-3;
+    }
+
+    /* Body Text */
+    & p {
+        @apply leading-relaxed mb-5;
+    }
+
+    /* Lists: Fixes the lack of bullets in raw HTML */
+    & ul {
+        @apply list-disc list-inside mb-6 space-y-2 ml-2;
+    }
+    & ol {
+        @apply list-decimal list-inside mb-6 space-y-2 ml-2;
+    }
+    & li {
+        @apply pl-2;
+    }
+
+    /* Links: Use your primary theme color */
+    & a {
+        @apply text-primary-600 underline underline-offset-4 decoration-primary-500/30 hover:decoration-primary-500 transition-colors;
+    }
+
+    /* The "Parent Tip" Blockquote */
+    & blockquote {
+        @apply border-l-4 border-primary-500 bg-primary-50/50 dark:bg-primary-900/10
+             py-4 px-6 my-8 rounded-r-lg italic text-gray-700 dark:text-gray-300;
+
+        & p {
+            @apply mb-0;
+        }
+    }
+
+    /* Standardizing images/figures in posts */
+    & img {
+        @apply rounded-2xl shadow-md my-8;
+    }
+
+    /* Horizontal Rules */
+    & hr {
+        @apply my-10 border-gray-200 dark:border-gray-800;
+    }
+}
