@@ -1,8 +1,9 @@
 <template>
+    {{ locations }}
     <LMap
         style="height: 50vh"
         :zoom="12"
-        :center="[28.1140756, -82.3064378]"
+        :center="locations[0].latlng"
         :use-global-leaflet="false"
     >
         <LTileLayer
@@ -11,5 +12,17 @@
             layer-type="base"
             name="OpenStreetMap"
         />
+        <!-- Loop through locations to create markers -->
+        <LMarker
+            v-for="(location, index) in locations"
+            :key="index"
+            :lat-lng="location.latlng"
+        />
     </LMap>
 </template>
+
+<script setup lang="ts">
+const props = defineProps<{
+    locations: Location[];
+}>();
+</script>

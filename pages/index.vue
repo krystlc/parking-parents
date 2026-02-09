@@ -1,7 +1,6 @@
 <template>
-    <div class="container max-w-sm mx-auto py-24 space-y-8">
+    <div class="container max-w-sm mx-auto">
         <ContentRenderer v-if="data" :value="data" />
-        <ParkList />
     </div>
 </template>
 
