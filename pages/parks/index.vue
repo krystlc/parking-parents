@@ -9,14 +9,18 @@
             </template>
             <template #list>
                 <section class="max-w-lg">
-                    <ULink v-for="park in parks" :key="park.id" :to="park.path">
+                    <ULink
+                        v-for="(park, index) in list"
+                        :key="index"
+                        :to="park.path"
+                    >
                         <ParkCard :park="park" />
                     </ULink>
                 </section>
             </template>
         </UTabs>
         <section class="max-w-lg hidden sm:block">
-            <ULink v-for="park in parks" :key="park.id" :to="park.path">
+            <ULink v-for="(park, index) in list" :key="index" :to="park.path">
                 <ParkCard :park="park" />
             </ULink>
         </section>
@@ -33,6 +37,16 @@ import type { ParkLocation } from "~/components/types";
 const { data: parks } = await useAsyncData("parks", () => {
     return queryCollection("parks").all();
 });
+
+const list = computed(() =>
+    parks.value?.map((p) => ({
+        title: p.title,
+        description: p.description,
+        path: p.path,
+        terrain: p.terrain,
+        updated: "2026-02-08",
+    })),
+);
 
 const markers = computed<ParkLocation[]>(
     () =>

@@ -5,16 +5,15 @@ const { data: posts } = await useAsyncData("blog", () => {
 </script>
 
 <template>
-    <UContainer as="main" class="max-w-md">
-        <UCard>
-            <template #header> Latest reports </template>
-            <ULink v-for="post of posts" :to="post.path">
-                <UCard variant="soft">
-                    <template #header>
-                        {{ post.title }}
-                    </template>
-                </UCard>
-            </ULink>
-        </UCard>
+    <UContainer as="main" class="max-w-3xl space-y-8">
+        <PostCard
+            v-for="post of posts"
+            :post="{
+                date: post.date,
+                title: post.title,
+                preview: post.description,
+                path: post.path,
+            }"
+        />
     </UContainer>
 </template>

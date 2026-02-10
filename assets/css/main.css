@@ -30,7 +30,6 @@
 
     /* Links: Use your primary theme color */
     & a {
-        @apply text-primary-600 underline underline-offset-4 decoration-primary-500/30 hover:decoration-primary-500 transition-colors;
     }
 
     /* The "Parent Tip" Blockquote */

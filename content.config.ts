@@ -1,5 +1,15 @@
 import { defineCollection, defineContentConfig, z } from "@nuxt/content";
 
+const parksScheme = z.object({
+  title: z.string(),
+  fenced: z.boolean(),
+  shade: z.boolean(),
+  restrooms: z.boolean(),
+  terrain: z.enum(["rubber", "woodchips", "paved"]),
+  address: z.string(),
+  latlng: z.array(z.number()),
+});
+
 export default defineContentConfig({
   collections: {
     pages: defineCollection({
@@ -9,15 +19,7 @@ export default defineContentConfig({
     parks: defineCollection({
       type: "page",
       source: "parks/**/index.md", // Only the main park files
-      schema: z.object({
-        title: z.string(),
-        fenced: z.boolean(),
-        shade: z.boolean(),
-        restrooms: z.boolean(),
-        terrain: z.enum(["rubber", "woodchips", "paved"]),
-        address: z.string(),
-        latlng: z.array(z.number()),
-      }),
+      schema: parksScheme,
     }),
     updates: defineCollection({
       type: "page",
