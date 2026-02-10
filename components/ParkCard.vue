@@ -6,7 +6,7 @@
 
         <a href="#">
             <h3 class="mt-0.5 text-lg font-medium">
-                How to center an element using JavaScript and jQuery
+                {{ park.title }}
             </h3>
         </a>
 
