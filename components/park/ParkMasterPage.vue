@@ -1,9 +1,21 @@
 <script setup lang="ts">
 const props = defineProps<{ slug: string }>();
 
+// 1. Fetch the Master Park Data
 const { data: page } = await useAsyncData(`park-master-${props.slug}`, () => {
     return queryCollection("parks").path(`/parks/${props.slug}`).first();
 });
+
+// 2. Bridge: Fetch the LATEST update to extract the "Vibe"
+const { data: latestUpdate } = await useAsyncData(
+    `latest-vibe-${props.slug}`,
+    () => {
+        return queryCollection("updates")
+            .where("parkId", "=", props.slug)
+            .order("date", "DESC")
+            .first();
+    },
+);
 
 // Auto-generate SEO Meta Tags
 if (page.value) {
@@ -58,14 +70,38 @@ if (page.value) {
 
 <template>
     <div v-if="page">
-        <h1 class="text-4xl font-bold">{{ page.title }}</h1>
+        <header class="mb-8">
+            <h1 class="text-4xl font-extrabold tracking-tight">
+                {{ page.title }}
+            </h1>
+
+            <div v-if="latestUpdate?.vibe" class="mt-4 flex items-center gap-3">
+                <UBadge v-if="page.fenced">Fenced</UBadge>
+                <UBadge v-if="page.shade">Shaded</UBadge>
+                <span
+                    class="text-sm font-semibold uppercase tracking-wider text-gray-500"
+                >
+                    Current Vibe:
+                </span>
+                <div class="flex flex-wrap gap-2">
+                    <UBadge
+                        v-for="v in latestUpdate.vibe"
+                        :key="v"
+                        variant="subtle"
+                        color="primary"
+                        class="rounded-full px-3 py-1"
+                    >
+                        {{ v }}
+                    </UBadge>
+                </div>
+                <span class="text-xs text-gray-400 italic">
+                    (Reported {{ latestUpdate.date }})
+                </span>
+            </div>
+        </header>
 
         <div class="md:grid md:grid-cols-5 gap-8 py-4">
             <main class="md:col-span-3 space-y-4">
-                <div class="flex gap-2">
-                    <UBadge v-if="page.fenced">Fenced</UBadge>
-                    <UBadge v-if="page.shade">Shaded</UBadge>
-                </div>
                 <UpdateRecentAlert :park-id="props.slug" />
                 <section class="prose">
                     <ContentRenderer :value="page" />
