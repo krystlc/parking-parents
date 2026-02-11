@@ -1,8 +1,7 @@
 ---
-title: 'Flatwoods Park'
-description: 'Wilderness preserve with a 7-mile paved loop road for cycling & skating plus birding & picnic areas.'
 title: Flatwoods Park
-fenced: true
+description: Wilderness preserve with a 7-mile paved loop road for cycling & skating plus birding & picnic areas.
+fenced: false
 shade: false
 restrooms: true
 terrain: paved

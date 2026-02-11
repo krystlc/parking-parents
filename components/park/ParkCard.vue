@@ -12,7 +12,7 @@
 
         <div class="mt-4 flex flex-wrap gap-1">
             <UBadge
-                icon="i-lucide-panel-left-right-dashed"
+                icon="i-lucide-train-track"
                 color="info"
                 variant="soft"
                 class="capitalize"
@@ -21,10 +21,7 @@
             <UBadge icon="i-lucide-toilet" color="info" variant="soft">
                 Restrooms
             </UBadge>
-            <UBadge
-                icon="i-lucide-thermometer-sun"
-                color="warning"
-                variant="soft"
+            <UBadge icon="i-lucide-sun" color="warning" variant="soft"
                 >No shade</UBadge
             >
         </div>

@@ -7,7 +7,7 @@ Parking Parents is a high-utility discovery platform for parents. It bridges the
 ## 🛠 Project Roadmap (v1.0)
 
 ### 🗺️ Geospatial Discovery (The Map)
-- [ ] **TASK-101:** Implement `Supercluster` logic for Mapbox/Leaflet marker clustering to handle high density.
+- [x] **TASK-101:** Implement `Supercluster` logic for Mapbox/Leaflet marker clustering to handle high density.
 - [ ] **TASK-102:** Develop "Search as I move" map bounds re-fetching for real-time park discovery.
 - [ ] **TASK-103:** Create a sliding "Park Preview Card" for mobile map interactions (drawer-style).
 - [ ] **TASK-104:** Build multi-select filtering logic for Zod-validated amenities (Fenced, Shaded, Rubber Floor).
@@ -35,7 +35,7 @@ Parking Parents is a high-utility discovery platform for parents. It bridges the
 ### 💌 Conversion & Growth
 - [ ] **TASK-501:** Integrate a newsletter signup CTA in the footer (Mailchimp/Substack/Loops).
 - [ ] **TASK-502:** Design a "Park of the Month" newsletter template for automated engagement.
-- [ ] **TASK-503:** Implement "Save to Favorites" using LocalStorage to encourage user stickiness.
+- [x] **TASK-503:** Implement "Save to Favorites" using LocalStorage to encourage user stickiness.
 
 ### 🏗️ Infrastructure & V1.0 Polish
 - [ ] **TASK-601:** Implement `NuxtImg` with a provider (IPX/Cloudinary) for optimized mobile performance.

@@ -79,7 +79,9 @@ const { data: reports, status } = await useAsyncData(
             <p class="text-muted">
                 No field reports yet. Be the first to share an update!
             </p>
-            <UButton variant="link" class="mt-2">Submit a correction</UButton>
+            <UButton disabled variant="ghost" class="mt-2"
+                >Submit a correction</UButton
+            >
         </div>
     </section>
 </template>
