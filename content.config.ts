@@ -38,8 +38,8 @@ export default defineContentConfig({
         description: z.string().max(160),
         date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), // Format: YYYY-MM-DD
         parkId: z.string(), // Must match the folder name of the parent park
-        vibe: z.array(z.string()), // e.g., ['Quiet', 'High Energy', 'Social']
-        author: z.string().default("Parent Scout"),
+        vibe: z.array(z.string()).min(1), // e.g., ['Quiet', 'High Energy', 'Social']
+        author: z.string().default("Papa"),
       }),
     }),
   },

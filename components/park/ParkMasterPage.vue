@@ -73,6 +73,7 @@ if (page.value) {
         <header class="mb-8">
             <h1 class="text-4xl font-extrabold tracking-tight">
                 {{ page.title }}
+                <ParkFavoriteButton :park-id="page.id" />
             </h1>
 
             <div v-if="latestUpdate?.vibe" class="mt-4 flex items-center gap-3">
