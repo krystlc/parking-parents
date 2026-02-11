@@ -2,7 +2,7 @@
     <div>
         <header>
             <UContainer class="w-fit py-4">
-                <Header />
+                <AppHeader />
             </UContainer>
         </header>
         <slot />
@@ -10,7 +10,7 @@
             as="footer"
             class="text-center py-24 text-muted text-sm leading-relaxed"
         >
-            <Footer />
+            <AppFooter />
         </UContainer>
     </div>
 </template>

@@ -9,8 +9,6 @@ terrain: paved
 coordinates: [28.1140756, -82.3064378]
 ---
 
-# {{$doc.title}}
-
 ## 🚽 Restrooms
 The restrooms are located near the main pavilion. They are usually unlocked from dawn to dusk.
 

@@ -14,9 +14,9 @@ Parking Parents is a high-utility discovery platform for parents. It bridges the
 - [ ] **TASK-105:** Implement "Distance from me" sorting using the Browser Geolocation API.
 
 ### 📄 Content Architecture (Parks & Field Reports)
-- [ ] **TASK-201:** Develop a `Breadcrumb` component with dynamic Nuxt Content path injection (Park > Update).
+- [x] **TASK-201:** Develop a `Breadcrumb` component with dynamic Nuxt Content path injection (Park > Update).
 - [ ] **TASK-202:** Implement "Sibling Park" recommendation engine based on proximity or shared tags.
-- [ ] **TASK-203:** Build `FieldReportList` component to query child collections by `parkId` in frontmatter.
+- [x] **TASK-203:** Build `FieldReportList` component to query child collections by `parkId` in frontmatter.
 - [ ] **TASK-204:** Create a "Condition Alert" flag on Park Master pages if a Field Report is < 7 days old.
 - [ ] **TASK-205:** Bridge Parent/Child data via `useAsyncData` to show latest "Vibe" on the Master Profile.
 
