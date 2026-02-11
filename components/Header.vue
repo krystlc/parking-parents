@@ -4,7 +4,6 @@ import type { NavigationMenuItem } from "@nuxt/ui";
 const items = ref<NavigationMenuItem[]>([
     [
         {
-            label: "Parking Parents",
             icon: "i-lucide-circle-parking",
             to: "/",
         },

@@ -1,13 +1,22 @@
 import { defineCollection, defineContentConfig, z } from "@nuxt/content";
 
 const parksScheme = z.object({
-  title: z.string(),
-  fenced: z.boolean(),
-  shade: z.boolean(),
-  restrooms: z.boolean(),
-  terrain: z.enum(["rubber", "woodchips", "paved"]),
+  title: z.string().min(5).max(60),
+  description: z.string().min(50).max(160), // Forces SEO-friendly lengths
   address: z.string(),
-  latlng: z.array(z.number()),
+  coordinates: z.tuple([z.number(), z.number()]), // [lat, lng] for the map
+  // Amenities Checkboxes
+  fenced: z.boolean().default(false),
+  restrooms: z.boolean().default(false),
+  shade: z.boolean().default(false),
+  babySwings: z.boolean().default(false),
+  terrain: z.array(z.enum(["rubber", "woodchips", "paved", "grass"])),
+  // Accessibility / Extras
+  parking: z.enum(["free", "paid", "none"]),
+  strollerFriendly: z.boolean().default(true),
+  ageGroup: z.array(z.enum(["infant", "toddler", "young_child", "big_kid"])),
+  // Social
+  featuredImage: z.string().optional(),
 });
 
 export default defineContentConfig({
@@ -25,9 +34,12 @@ export default defineContentConfig({
       type: "page",
       source: "parks/**/[!index]*.md", // All other files in park folders
       schema: z.object({
-        date: z.string(),
-        parkId: z.string(), // To link it back to the park
-        vibe: z.string(),
+        title: z.string().min(5).max(70),
+        description: z.string().max(160),
+        date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/), // Format: YYYY-MM-DD
+        parkId: z.string(), // Must match the folder name of the parent park
+        vibe: z.array(z.string()), // e.g., ['Quiet', 'High Energy', 'Social']
+        author: z.string().default("Parent Scout"),
       }),
     }),
   },

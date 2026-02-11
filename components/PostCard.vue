@@ -13,8 +13,10 @@
 
         <div class="hidden sm:block sm:basis-56 bg-default/50"></div>
 
-        <div class="flex flex-1 flex-col justify-between">
-            <div class="border-s p-4 sm:border-l-transparent sm:p-6">
+        <div
+            class="flex flex-1 flex-col justify-between border-s border-muted sm:border-l-transparent"
+        >
+            <div class="p-4 sm:p-6">
                 <ULink :to="post.path">
                     <h3 class="font-bold uppercase">
                         {{ post.title }}
@@ -26,7 +28,7 @@
                 </p>
             </div>
 
-            <div class="sm:flex sm:items-end sm:justify-end">
+            <div class="flex items-end justify-end">
                 <UButton :to="post.path" class="rounded-br-none">
                     Read Blog
                 </UButton>

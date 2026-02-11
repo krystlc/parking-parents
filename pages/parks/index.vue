@@ -11,7 +11,7 @@
                 <section class="max-w-lg">
                     <ULink
                         v-for="(park, index) in list"
-                        :key="index"
+                        :key="'marker-' + index"
                         :to="park.path"
                     >
                         <ParkCard :park="park" />
@@ -52,7 +52,7 @@ const markers = computed<ParkLocation[]>(
     () =>
         parks.value?.map((p) => ({
             name: p.title,
-            latlng: p.latlng,
+            latlng: p.coordinates,
             path: p.path,
         })) ?? [],
 );
