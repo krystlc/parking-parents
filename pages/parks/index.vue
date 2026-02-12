@@ -3,28 +3,17 @@
         <ParkFilter />
     </aside> -->
     <main class="sm:flex sm:h-screen">
-        <UTabs :items="items" class="w-full sm:hidden">
-            <template #map>
-                <ParkMap :locations="markers" />
-            </template>
-            <template #list>
-                <section class="max-w-lg">
-                    <ULink
-                        v-for="(park, index) in list"
-                        :key="'marker-' + index"
-                        :to="park.path"
-                    >
-                        <ParkCard :park="park" />
-                    </ULink>
-                </section>
-            </template>
-        </UTabs>
-        <section class="max-w-lg hidden sm:block">
-            <ULink v-for="(park, index) in list" :key="index" :to="park.path">
+        <section class="max-w-lg space-y-4 px-4 min-w-md">
+            <ULink
+                v-for="park in parks"
+                :key="park.id"
+                :to="park.path"
+                class="block"
+            >
                 <ParkCard :park="park" />
             </ULink>
         </section>
-        <section class="flex-1 hidden sm:block">
+        <section class="flex-1">
             <ParkMap :locations="markers" />
         </section>
     </main>
@@ -38,16 +27,6 @@ const { data: parks } = await useAsyncData("parks", () => {
     return queryCollection("parks").all();
 });
 
-const list = computed(() =>
-    parks.value?.map((p) => ({
-        title: p.title,
-        description: p.description,
-        path: p.path,
-        terrain: p.terrain,
-        updated: "2026-02-08",
-    })),
-);
-
 const markers = computed<ParkLocation[]>(
     () =>
         parks.value?.map((p) => ({
@@ -56,17 +35,4 @@ const markers = computed<ParkLocation[]>(
             path: p.path,
         })) ?? [],
 );
-
-const items = [
-    {
-        icon: "i-lucide-list",
-        label: "List",
-        slot: "list",
-    },
-    {
-        icon: "i-lucide-map-marker",
-        label: "Map",
-        slot: "map",
-    },
-] satisfies TabsItem[];
 </script>

@@ -1,49 +1,46 @@
 <template>
-    <article class="flex bg-elevated">
-        <div class="rotate-180 p-2 [writing-mode:vertical-lr]">
-            <time
-                :datetime="post.date"
-                class="flex items-center justify-between gap-4 text-xs font-bold uppercase"
+    <UCard class="group transition-all shadow-sm hover:shadow-md">
+        <div class="flex justify-between items-start mb-2">
+            <span
+                class="text-xs font-medium text-gray-500 uppercase tracking-wider"
             >
-                <span>{{ $datefns.format(post.date, "yyyy") }}</span>
-                <span class="w-px flex-1"></span>
-                <span>{{ $datefns.format(post.date, "MMM d") }}</span>
-            </time>
+                {{ $datefns.formatDistanceToNow(post.date) }}
+            </span>
+            <div class="flex gap-1">
+                <UBadge
+                    v-for="v in post.vibe?.slice(0, 2)"
+                    :key="v"
+                    variant="subtle"
+                >
+                    {{ v }}
+                </UBadge>
+            </div>
         </div>
 
-        <div class="hidden sm:block sm:basis-56 bg-default/50"></div>
+        <h3 class="font-bold">
+            {{ post.title }}
+        </h3>
 
-        <div
-            class="flex flex-1 flex-col justify-between border-s border-muted sm:border-l-transparent"
+        <p class="text-sm text-muted mt-2 line-clamp-2">
+            {{ post.description }}
+        </p>
+
+        <UButton
+            :to="post.path"
+            class="mt-4 flex items-center text-xs font-semibold"
+            variant="link"
+            icon="i-lucide-arrow-right"
+            trailing
         >
-            <div class="p-4 sm:p-6">
-                <ULink :to="post.path">
-                    <h3 class="font-bold uppercase">
-                        {{ post.title }}
-                    </h3>
-                </ULink>
-
-                <p class="mt-2 line-clamp-3 text-sm/relaxed">
-                    {{ post.preview }}
-                </p>
-            </div>
-
-            <div class="flex items-end justify-end">
-                <UButton :to="post.path" class="rounded-br-none">
-                    Read Blog
-                </UButton>
-            </div>
-        </div>
-    </article>
+            Read Full Report
+        </UButton>
+    </UCard>
 </template>
 
 <script setup lang="ts">
+import type { UpdatesCollectionItem } from "@nuxt/content";
+
 defineProps<{
-    post: {
-        date: string;
-        title: string;
-        preview: string;
-        path: string;
-    };
+    post: UpdatesCollectionItem;
 }>();
 </script>

@@ -17,12 +17,12 @@ const { data: reports, status } = await useAsyncData(
 
 <template>
     <section>
-        <div class="flex items-center justify-between">
-            <h2 class="text-2xl font-bold flex items-center gap-2 mb-8">
-                <UIcon name="i-lucide-box" class="text-primary" />
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-bold flex items-center gap-2">
+                <UIcon name="i-lucide-box" />
                 Field Reports
             </h2>
-            <UBadge v-if="reports" color="gray" variant="soft">
+            <UBadge v-if="reports" variant="subtle" color="info">
                 {{ reports.length }}
                 {{ reports.length === 1 ? "Update" : "Updates" }}
             </UBadge>
@@ -33,43 +33,11 @@ const { data: reports, status } = await useAsyncData(
         </div>
 
         <div v-else-if="reports?.length" class="grid grid-cols-1 gap-4">
-            <NuxtLink
+            <UpdateCard
                 v-for="report in reports"
                 :key="report.id"
-                :to="report.path"
-                class="group p-5 border border-gray-200 dark:border-gray-800 rounded-xl bg-white dark:bg-gray-900 hover:border-primary-500 transition-all shadow-sm hover:shadow-md"
-            >
-                <div class="flex justify-between items-start mb-2">
-                    <span
-                        class="text-xs font-medium text-gray-500 uppercase tracking-wider"
-                    >
-                        {{ $datefns.formatDistanceToNow(report.date) }}
-                    </span>
-                    <div class="flex gap-1">
-                        <UBadge
-                            v-for="v in report.vibe?.slice(0, 2)"
-                            :key="v"
-                            size="xs"
-                            variant="subtle"
-                        >
-                            {{ v }}
-                        </UBadge>
-                    </div>
-                </div>
-
-                <h3 class="font-bold">
-                    {{ report.title }}
-                </h3>
-
-                <p class="text-sm text-muted mt-2 line-clamp-2">
-                    {{ report.description }}
-                </p>
-
-                <div class="mt-4 flex items-center text-xs font-semibold">
-                    Read Full Report
-                    <UIcon name="i-lucide-arrow-right" class="ml-1 w-4 h-4" />
-                </div>
-            </NuxtLink>
+                :post="report"
+            />
         </div>
 
         <div

@@ -6,14 +6,6 @@ const { data: posts } = await useAsyncData("blog", () => {
 
 <template>
     <UContainer as="main" class="max-w-3xl space-y-8">
-        <UpdateCard
-            v-for="post of posts"
-            :post="{
-                date: post.date,
-                title: post.title,
-                preview: post.description,
-                path: post.path,
-            }"
-        />
+        <UpdateCard v-for="post of posts" :post="post" />
     </UContainer>
 </template>
