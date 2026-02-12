@@ -1,14 +1,12 @@
 <template>
-    <UContainer class="py-8">
+    <UContainer>
         <UCard>
             <template #header>
                 <div class="flex flex-col gap-4">
-                    <h2 class="text-2xl font-bold text-primary-600">
-                        Find Your Perfect Park
-                    </h2>
+                    <h2 class="text-2xl font-bold">Find Your Perfect Park</h2>
                     <UInput
                         v-model="filters.searchQuery"
-                        icon="i-heroicons-magnifying-glass-20-solid"
+                        icon="i-lucide-search"
                         size="xl"
                         :trailing="false"
                         placeholder="Search by park name or neighborhood..."
@@ -19,7 +17,7 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="space-y-4">
                     <h3 class="font-semibold flex items-center gap-2">
-                        <UIcon name="i-heroicons-shield-check" /> Safety &
+                        <UIcon name="i-lucide-shield-check" /> Safety &
                         Essentials
                     </h3>
                     <UCheckbox
@@ -35,9 +33,9 @@
 
                     <div class="pt-2">
                         <p class="text-sm font-medium mb-2">Amenities</p>
-                        <USelectMenu
+                        <USelect
                             v-model="filters.essentials"
-                            :options="essentialOptions"
+                            :items="essentialOptions"
                             multiple
                             placeholder="Select features"
                         />
@@ -46,41 +44,34 @@
 
                 <div class="space-y-4">
                     <h3 class="font-semibold flex items-center gap-2">
-                        <UIcon name="i-heroicons-map" /> Terrain & Access
+                        <UIcon name="i-lucide-accessibility" /> Terrain & Access
                     </h3>
                     <URadioGroup
                         v-model="filters.terrain"
                         legend="Surface Type"
-                        :options="terrainOptions"
+                        :items="terrainOptions"
                     />
                 </div>
 
                 <div class="space-y-4">
                     <h3 class="font-semibold flex items-center gap-2">
-                        <UIcon name="i-heroicons-sparkles" /> Park Vibe
+                        <UIcon name="i-lucide-sparkles" /> Park Vibe
                     </h3>
-                    <USelectMenu
+                    <USelect
                         v-model="filters.vibe"
-                        :options="vibeOptions"
+                        :items="vibeOptions"
                         placeholder="What's the mood today?"
-                    >
-                        <!-- <template #label>
-                            <span v-if="filters.vibe">{{
-                                filters.vibe.label
-                            }}</span>
-                            <span v-else>Choose a vibe</span>
-                        </template> -->
-                    </USelectMenu>
+                    />
 
-                    <div
-                        class="bg-gray-50 dark:bg-gray-800 p-3 rounded-lg border border-gray-200 dark:border-gray-700"
+                    <UAlert
+                        title="Parent Tip"
+                        variant="soft"
+                        description="Check the Social Hub vibe if you're looking for other parents to chat with!"
                     >
                         <p class="text-xs text-gray-500 italic">
-                            <strong>Parent Tip:</strong> Check the "Social Hub"
-                            vibe if you're looking for other parents to chat
-                            with!
+                            <strong>:</strong>
                         </p>
-                    </div>
+                    </UAlert>
                 </div>
             </div>
 
@@ -102,7 +93,7 @@
                     >
                         Clear All Filters
                     </UButton>
-                    <UButton color="primary" icon="i-heroicons-map-pin">
+                    <UButton color="primary" icon="i-lucide-map-pinned">
                         View Results
                     </UButton>
                 </div>
@@ -117,7 +108,7 @@ const filters = reactive({
     searchQuery: "",
     essentials: [],
     terrain: [],
-    vibe: null,
+    vibe: "",
     isFullyFenced: false,
     hasShade: false,
 });

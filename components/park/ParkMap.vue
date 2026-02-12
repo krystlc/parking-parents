@@ -1,8 +1,8 @@
 <template>
     <LMap
-        style="height: 100vh"
+        style="height: 480px"
         :zoom="12"
-        :center="locations[0]?.latlng || [0, 0]"
+        :center="locations[0]?.coordinates || [0, 0]"
         :use-global-leaflet="false"
         @ready="onMapReady"
         @moveend="updateClusters"
@@ -48,10 +48,10 @@
 <script setup lang="ts">
 import { ref, shallowRef } from "vue";
 import Supercluster from "supercluster";
-import { type ParkLocation } from "../types";
+import type { ParksCollectionItem } from "@nuxt/content";
 
 const props = defineProps<{
-    locations: ParkLocation[];
+    locations: ParksCollectionItem[];
 }>();
 
 const mapInstance = shallowRef<any>(null);
@@ -68,7 +68,7 @@ const points = props.locations.map((park) => ({
     properties: { cluster: false, parkId: park.path },
     geometry: {
         type: "Point",
-        coordinates: [park.latlng[1], park.latlng[0]],
+        coordinates: [park.coordinates[1], park.coordinates[0]],
     },
 }));
 

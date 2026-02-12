@@ -1,38 +1,94 @@
 <template>
-    <!-- <aside>
-        <ParkFilter />
-    </aside> -->
-    <main class="sm:flex sm:h-screen">
-        <section class="max-w-lg space-y-4 px-4 min-w-md">
+    <main class="flex">
+        <section>
+            <ParkFilter @update:filters="(val) => (activeFilters = val)" />
+        </section>
+        <section class="max-w-lg space-y-4 px-4 min-w-md overflow-y-auto pb-20">
+            <p class="text-sm text-gray-500 py-2">
+                Showing {{ filteredParks.length }} parks
+            </p>
+
             <ULink
-                v-for="park in parks"
+                v-for="park in filteredParks"
                 :key="park.id"
                 :to="park.path"
                 class="block"
             >
                 <ParkCard :park="park" />
             </ULink>
-        </section>
-        <section class="flex-1">
-            <ParkMap :locations="markers" />
+
+            <div v-if="filteredParks.length === 0" class="text-center py-10">
+                <UIcon
+                    name="i-heroicons-face-frown"
+                    class="w-10 h-10 mx-auto text-gray-400"
+                />
+                <p class="mt-2 text-gray-600">No parks match your filters.</p>
+            </div>
         </section>
     </main>
+    <aside>
+        <UContainer>
+            <ParkMap :locations="filteredParks" />
+        </UContainer>
+    </aside>
 </template>
 
 <script setup lang="ts">
-import type { TabsItem } from "@nuxt/ui";
-import type { ParkLocation } from "~/components/types";
+const route = useRoute();
+const router = useRouter();
 
-const { data: parks } = await useAsyncData("parks", () => {
+const { data: allParks } = await useAsyncData("parks", () => {
     return queryCollection("parks").all();
 });
 
-const markers = computed<ParkLocation[]>(
-    () =>
-        parks.value?.map((p) => ({
-            name: p.title,
-            latlng: p.coordinates,
-            path: p.path,
-        })) ?? [],
+// 1. Initialize filters from URL query parameters (or defaults)
+const activeFilters = ref({
+    searchQuery: (route.query.q as string) || "",
+    essentials: Array.isArray(route.query.e)
+        ? route.query.e
+        : route.query.e
+          ? [route.query.e]
+          : [],
+    terrain: (route.query.t as string) || "",
+    isFullyFenced: route.query.f === "true",
+    hasShade: route.query.s === "true",
+});
+
+// 2. Watch for filter changes and update the URL (Sync State -> URL)
+watch(
+    activeFilters,
+    (newFilters) => {
+        router.replace({
+            query: {
+                q: newFilters.searchQuery || undefined,
+                e: newFilters.essentials.length
+                    ? newFilters.essentials
+                    : undefined,
+                t: newFilters.terrain || undefined,
+                f: newFilters.isFullyFenced ? "true" : undefined,
+                s: newFilters.hasShade ? "true" : undefined,
+            },
+        });
+    },
+    { deep: true },
 );
+
+// 3. The filtering logic remains the same
+const filteredParks = computed(() => {
+    if (!allParks.value) return [];
+    return allParks.value.filter((park) => {
+        if (
+            activeFilters.value.searchQuery &&
+            !park.title
+                .toLowerCase()
+                .includes(activeFilters.value.searchQuery.toLowerCase())
+        )
+            return false;
+        if (activeFilters.value.isFullyFenced && !park.fenced) return false;
+        if (activeFilters.value.hasShade && !park.shade) return false;
+
+        // Add logic for Essentials and Terrain here as well
+        return true;
+    });
+});
 </script>
