@@ -3,7 +3,13 @@
         class="group transition-all shadow-sm hover:shadow-md"
         variant="subtle"
     >
-        {{ park.title }}
+        <header class="flex justify-between">
+            {{ park.title }}
+
+            <div>
+                <slot />
+            </div>
+        </header>
 
         <div class="mt-4 flex flex-wrap gap-1">
             <UBadge

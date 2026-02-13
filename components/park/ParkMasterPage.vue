@@ -101,7 +101,7 @@ if (page.value) {
             </div>
         </header>
 
-        <div class="md:grid md:grid-cols-5 gap-8 py-4">
+        <div class="md:grid md:grid-cols-5 gap-8 space-y-8">
             <main class="md:col-span-3 space-y-4">
                 <UpdateRecentAlert :park-id="props.slug" />
                 <section class="prose">
@@ -109,7 +109,8 @@ if (page.value) {
                 </section>
             </main>
 
-            <aside class="md:col-span-2">
+            <aside class="md:col-span-2 space-y-8">
+                <ParkNearby :current-park="page" />
                 <UpdateList :park-id="props.slug" />
             </aside>
         </div>
