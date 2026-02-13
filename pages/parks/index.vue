@@ -1,10 +1,10 @@
 <template>
-    <main class="flex">
-        <section>
+    <UContainer class="grid md:grid-cols-3 gap-8">
+        <aside>
             <ParkFilter @update:filters="(val) => (activeFilters = val)" />
-        </section>
-        <section class="max-w-lg space-y-4 px-4 min-w-md overflow-y-auto pb-20">
-            <p class="text-sm text-gray-500 py-2">
+        </aside>
+        <main class="space-y-4">
+            <p class="text-sm text-muted">
                 Showing {{ filteredParks.length }} parks
             </p>
 
@@ -24,13 +24,11 @@
                 />
                 <p class="mt-2 text-gray-600">No parks match your filters.</p>
             </div>
-        </section>
-    </main>
-    <aside>
-        <UContainer>
+        </main>
+        <aside>
             <ParkMap :locations="filteredParks" />
-        </UContainer>
-    </aside>
+        </aside>
+    </UContainer>
 </template>
 
 <script setup lang="ts">
