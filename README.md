@@ -15,14 +15,14 @@ Parking Parents is a high-utility discovery platform for parents. It bridges the
 
 ### 📄 Content Architecture (Parks & Field Reports)
 - [x] **TASK-201:** Develop a `Breadcrumb` component with dynamic Nuxt Content path injection (Park > Update).
-- [ ] **TASK-202:** Implement "Sibling Park" recommendation engine based on proximity or shared tags.
+- [x] **TASK-202:** Implement "Sibling Park" recommendation engine based on proximity or shared tags.
 - [x] **TASK-203:** Build `FieldReportList` component to query child collections by `parkId` in frontmatter.
 - [x] **TASK-204:** Create a "Condition Alert" flag on Park Master pages if a Field Report is < 7 days old.
 - [x] **TASK-205:** Bridge Parent/Child data via `useAsyncData` to show latest "Vibe" on the Master Profile.
 
 ### 🎒 The Kit & Prose Experience
-- [ ] **TASK-301:** Implement `TableOfContents` component with an Intersection Observer for active-link tracking.
-- [ ] **TASK-302:** Develop a `StickyAside` layout for desktop to keep the TOC visible during long reads.
+- [x] **TASK-301:** Implement `TableOfContents` component with an Intersection Observer for active-link tracking.
+- [x] **TASK-302:** Develop a `StickyAside` layout for desktop to keep the TOC visible during long reads.
 - [ ] **TASK-303:** Create "Age-Switching" sections for the Baby Bag page (Infant vs. Toddler vs. Preschooler).
 - [ ] **TASK-304:** Build a "Copy Checklist" utility for one-click export of bag items to mobile Notes apps.
 

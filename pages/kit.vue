@@ -1,9 +1,14 @@
 <template>
-    <main class="container mx-auto max-w-xl">
-        <article class="prose px-4">
+    <UContainer class="grid grid-cols-1 md:grid-cols-12 gap-12">
+        <article class="prose col-span-8">
             <ContentRenderer :value="page" />
         </article>
-    </main>
+        <aside class="hidden md:block md:col-span-4">
+            <div class="sticky top-24">
+                <UiTableOfContents :links="page.body.toc.links" />
+            </div>
+        </aside>
+    </UContainer>
 </template>
 
 <script setup>
