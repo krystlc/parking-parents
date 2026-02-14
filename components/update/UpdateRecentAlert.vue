@@ -29,7 +29,7 @@ const isRecent = computed(() => {
 <template>
     <div v-if="latestReport && isRecent" class="mb-6">
         <UAlert
-            icon="i-heroicons-exclamation-triangle"
+            icon="i-lucide-triangle-alert"
             variant="soft"
             color="info"
             title="Recent Field Update"
@@ -42,7 +42,7 @@ const isRecent = computed(() => {
                     color="amber"
                     variant="ghost"
                     label="Read Update"
-                    icon="i-heroicons-arrow-right"
+                    icon="i-lucide-arrow-right"
                     trailing
                 />
             </template>

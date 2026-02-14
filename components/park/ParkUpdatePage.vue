@@ -49,7 +49,7 @@ if (update.value) {
         <UButton
             :to="`/parks/${props.parkSlug}`"
             variant="link"
-            icon="i-heroicons-arrow-left"
+            icon="i-lucide-arrow-left"
             class="mt-8"
         >
             Back to {{ props.parkSlug.replace(/-/g, " ") }}

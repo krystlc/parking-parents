@@ -19,7 +19,7 @@
 
             <div v-if="filteredParks.length === 0" class="text-center py-10">
                 <UIcon
-                    name="i-heroicons-face-frown"
+                    name="i-lucide-frown"
                     class="w-10 h-10 mx-auto text-gray-400"
                 />
                 <p class="mt-2 text-gray-600">No parks match your filters.</p>

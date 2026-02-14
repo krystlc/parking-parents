@@ -104,18 +104,18 @@ const filters = reactive({
 });
 
 const essentialOptions = [
-    { label: "Restrooms", value: "restrooms", icon: "i-heroicons-hand-raised" },
+    { label: "Restrooms", value: "restrooms", icon: "i-lucide-hand" },
     {
         label: "Baby Swings",
         value: "baby_swings",
-        icon: "i-heroicons-face-smile",
+        icon: "i-lucide-smile",
     },
     {
         label: "Changing Tables",
         value: "changing_tables",
-        icon: "i-heroicons-beaker",
+        icon: "i-lucide-beaker",
     },
-    { label: "Water Station", value: "water", icon: "i-heroicons-variable" },
+    { label: "Water Station", value: "water", icon: "i-lucide-variable" },
 ];
 
 const terrainOptions = [

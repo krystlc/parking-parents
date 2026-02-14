@@ -28,11 +28,7 @@ const handleCopy = () => {
 
 <template>
     <UButton
-        :icon="
-            copied
-                ? 'i-heroicons-check-circle'
-                : 'i-heroicons-clipboard-document-check'
-        "
+        :icon="copied ? 'i-lucide-circle-check' : 'i-lucide-clipboard-check'"
         :color="copied ? 'green' : 'primary'"
         variant="soft"
         size="sm"
