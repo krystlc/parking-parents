@@ -23,8 +23,8 @@ Parking Parents is a high-utility discovery platform for parents. It bridges the
 ### 🎒 The Kit & Prose Experience
 - [x] **TASK-301:** Implement `TableOfContents` component with an Intersection Observer for active-link tracking.
 - [x] **TASK-302:** Develop a `StickyAside` layout for desktop to keep the TOC visible during long reads.
-- [ ] **TASK-303:** Create "Age-Switching" sections for the Baby Bag page (Infant vs. Toddler vs. Preschooler).
-- [ ] **TASK-304:** Build a "Copy Checklist" utility for one-click export of bag items to mobile Notes apps.
+- [ ] ~~**TASK-303:** Create "Age-Switching" sections for the Baby Bag page (Infant vs. Toddler vs. Preschooler).~~
+- [x] **TASK-304:** Build a "Copy Checklist" utility for one-click export of bag items to mobile Notes apps.
 
 ### 📈 SEO & Metadata Authority
 - [ ] **TASK-401:** Automate OpenGraph (OG) image generation for Park pages using `@nuxtjs/og-image`.
