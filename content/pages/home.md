@@ -4,10 +4,10 @@ description: "Search by fencing, shade, terrain, and more. Because a park with a
 ---
 
 ::UiBannerHero
-
 We're logging every fenced-in playground, stroller-friendly path, and clean changing table in Tampa, so you can actually enjoy the fresh air.
                     
 #heading
+![Parking Parents](/logo.png){.w-16 .mx-auto}
 Park trips without the _"Are there restrooms?"_ panic.
  
 #actions

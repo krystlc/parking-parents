@@ -11,6 +11,8 @@ coordinates: [28.1140756, -82.3064378]
 ## 🚽 Restrooms
 The restrooms are located near the main pavilion. They are usually unlocked from dawn to dusk.
 
+<!--more-->
+
 ## 🏃 Terrain
 The main loop is 100% paved—perfect for strollers or balance bikes.
 

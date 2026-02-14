@@ -22,6 +22,16 @@ if (update.value) {
         articleTag: update.value.vibe,
     });
 }
+
+useSeoMeta({
+    title: update.value?.title,
+    description: update.value?.description,
+});
+
+defineOgImage("Template", {
+    title: update.value?.title,
+    description: update.value?.description,
+});
 </script>
 
 <template>
