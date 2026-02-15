@@ -39,7 +39,7 @@
                     feature.geometry.coordinates[1],
                     feature.geometry.coordinates[0],
                 ]"
-                @click="$router.push(feature.properties.parkId)"
+                @click="$emit('select-park', feature.properties.parkId)"
             />
         </template>
     </LMap>
@@ -50,6 +50,7 @@ import { ref, shallowRef } from "vue";
 import Supercluster from "supercluster";
 import type { ParksCollectionItem } from "@nuxt/content";
 
+const emit = defineEmits(["select-park"]);
 const props = defineProps<{
     locations: ParksCollectionItem[];
 }>();

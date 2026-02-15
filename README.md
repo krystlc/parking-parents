@@ -9,7 +9,7 @@ Parking Parents is a high-utility discovery platform for parents. It bridges the
 ### 🗺️ Geospatial Discovery (The Map)
 - [x] **TASK-101:** Implement `Supercluster` logic for Mapbox/Leaflet marker clustering to handle high density.
 - [ ] **TASK-102:** Develop "Search as I move" map bounds re-fetching for real-time park discovery.
-- [ ] **TASK-103:** Create a sliding "Park Preview Card" for mobile map interactions (drawer-style).
+- [x] **TASK-103:** Create a sliding "Park Preview Card" for mobile map interactions (drawer-style).
 - [x] **TASK-104:** Build multi-select filtering logic for Zod-validated amenities (Fenced, Shaded, Rubber Floor).
 - [ ] **TASK-105:** Implement "Distance from me" sorting using the Browser Geolocation API.
 

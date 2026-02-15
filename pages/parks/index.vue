@@ -3,7 +3,7 @@
         <aside>
             <ParkFilter @update:filters="(val) => (activeFilters = val)" />
         </aside>
-        <main class="space-y-4">
+        <main class="space-y-4 hidden md:block">
             <p class="text-sm text-muted">
                 Showing {{ filteredParks.length }} parks
             </p>
@@ -27,9 +27,24 @@
         </main>
         <aside>
             <ClientOnly>
-                <ParkMap :locations="filteredParks" />
+                <ParkMap
+                    :locations="filteredParks"
+                    @select-park="openPreview"
+                />
             </ClientOnly>
         </aside>
+        <USlideover
+            v-model:open="isPreviewOpen"
+            side="bottom"
+            :ui="{ height: 'max-h-[40vh]' }"
+        >
+            <template #content>
+                <ParkPreview
+                    :selectedPark="selectedPark"
+                    @on:close="isPreviewOpen = false"
+                />
+            </template>
+        </USlideover>
     </UContainer>
 </template>
 
@@ -91,4 +106,17 @@ const filteredParks = computed(() => {
         return true;
     });
 });
+
+const isPreviewOpen = ref(false);
+const selectedParkId = ref<string | null>(null);
+
+// Find the park object from our list when a marker is clicked
+const selectedPark = computed(() => {
+    return allParks.value?.find((p) => p.path === selectedParkId.value);
+});
+
+const openPreview = (id: string) => {
+    selectedParkId.value = id;
+    isPreviewOpen.value = true;
+};
 </script>
