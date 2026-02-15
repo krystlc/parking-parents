@@ -26,7 +26,9 @@
             </div>
         </main>
         <aside>
-            <ParkMap :locations="filteredParks" />
+            <ClientOnly>
+                <ParkMap :locations="filteredParks" />
+            </ClientOnly>
         </aside>
     </UContainer>
 </template>
