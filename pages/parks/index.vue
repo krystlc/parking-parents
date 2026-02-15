@@ -1,5 +1,5 @@
 <template>
-    <UContainer class="grid md:grid-cols-3 gap-8">
+    <UContainer as="main" class="grid md:grid-cols-3 gap-8">
         <aside>
             <ParkFilter @update:filters="(val) => (activeFilters = val)" />
         </aside>

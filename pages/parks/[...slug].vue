@@ -7,7 +7,7 @@ const updateSlug = slugArray[1];
 </script>
 
 <template>
-    <UContainer>
+    <UContainer as="main">
         <AppBreadcrumb />
         <ParkMasterPage v-if="!isUpdate" :slug="parkSlug" />
         <ParkUpdatePage

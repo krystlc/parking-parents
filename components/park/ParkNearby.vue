@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { ParksCollectionItem } from "@nuxt/content";
+
 const props = defineProps<{
     currentPark: any;
 }>();
@@ -22,7 +24,8 @@ const siblings = computed(() => {
 
             // Calculate "Tag Match" score for fallback
             const sharedTags = props.currentPark.ageGroup?.filter(
-                (tag: string) => p.ageGroup.includes(tag),
+                (tag: ParksCollectionItem["ageGroup"][number]) =>
+                    p.ageGroup.includes(tag),
             ).length;
 
             return { ...p, distance, sharedTags };
@@ -38,7 +41,7 @@ const siblings = computed(() => {
             <UIcon name="i-lucide-map-pinned" />
             Nearby Plan B's
         </h3>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="flex flex-col gap-4">
             <NuxtLink v-for="park in siblings" :key="park.id" :to="park.path">
                 <ParkCard :park="park">
                     <UBadge> {{ park.distance.toFixed(1) }} km away </UBadge>

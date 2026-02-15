@@ -27,8 +27,8 @@ Parking Parents is a high-utility discovery platform for parents. It bridges the
 - [x] **TASK-304:** Build a "Copy Checklist" utility for one-click export of bag items to mobile Notes apps.
 
 ### 📈 SEO & Metadata Authority
-- [ ] **TASK-401:** Automate OpenGraph (OG) image generation for Park pages using `@nuxtjs/og-image`.
-- [ ] **TASK-402:** Standardize JSON-LD Schema.org `Place` and `Review` snippets for Park entities.
+- [x] **TASK-401:** Automate OpenGraph (OG) image generation for Park pages using `@nuxtjs/og-image`.
+- [x] **TASK-402:** Standardize JSON-LD Schema.org `Place` and `Review` snippets for Park entities.
 - [ ] **TASK-403:** Implement Zod-based frontmatter validation to ensure 100% metadata coverage.
 - [ ] **TASK-404:** Configure `sitemap.xml` to prioritize Master Park pages over individual Field Reports.
 

@@ -30,7 +30,18 @@ if (page.value) {
         articleTag: page.value.ageGroup,
     });
 
-    // Schema.org JSON-LD for "Place"
+    const schemaAmenities = [
+        { name: "Fenced", value: page.value.fenced },
+        { name: "Restrooms", value: page.value.restrooms },
+        { name: "Shaded", value: page.value.shade },
+    ]
+        .filter((a) => a.value) // Only show features the park actually has
+        .map((a) => ({
+            "@type": "LocationFeatureSpecification",
+            name: a.name,
+            value: true,
+        }));
+
     useHead({
         script: [
             {
@@ -38,29 +49,22 @@ if (page.value) {
                 innerHTML: JSON.stringify({
                     "@context": "https://schema.org",
                     "@type": "Park",
+                    "@id": `https://parkingparents.com/parks/${props.slug}#park`, // Unique ID for cross-referencing
                     name: page.value.title,
                     description: page.value.description,
+                    image: page.value.featuredImage,
                     address: {
                         "@type": "PostalAddress",
                         streetAddress: page.value.address,
+                        addressLocality: "Tampa", // Replace with your dynamic city field if available
+                        addressRegion: "FL",
                     },
                     geo: {
                         "@type": "GeoCoordinates",
                         latitude: page.value.coordinates[0],
                         longitude: page.value.coordinates[1],
                     },
-                    amenityFeature: [
-                        {
-                            "@type": "LocationFeatureSpecification",
-                            name: "Fenced",
-                            value: page.value.fenced,
-                        },
-                        {
-                            "@type": "LocationFeatureSpecification",
-                            name: "Restrooms",
-                            value: page.value.restrooms,
-                        },
-                    ],
+                    amenityFeature: schemaAmenities,
                 }),
             },
         ],
@@ -120,8 +124,8 @@ defineOgImage("Template", {
             </main>
 
             <aside class="md:col-span-2 space-y-8">
-                <ParkNearby :current-park="page" />
                 <UpdateList :park-id="props.slug" />
+                <ParkNearby :current-park="page" />
             </aside>
         </div>
     </div>

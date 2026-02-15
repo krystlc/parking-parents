@@ -21,6 +21,35 @@ if (update.value) {
         // Dynamic structured data for Google
         articleTag: update.value.vibe,
     });
+
+    useHead({
+        script: [
+            {
+                type: "application/ld+json",
+                innerHTML: JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "Review",
+                    headline: update.value.title,
+                    description: update.value.description,
+                    datePublished: update.value.date,
+                    author: {
+                        "@type": "Organization", // Or "Person" if you have author names
+                        name: "Parking Parents",
+                    },
+                    itemReviewed: {
+                        "@type": "Park",
+                        "@id": `https://parkingparents.com/parks/${props.parkSlug}#park`, // Links to Master
+                        name: props.parkSlug.replace(/-/g, " "),
+                    },
+                    reviewRating: {
+                        "@type": "Rating",
+                        ratingValue: "5", // Defaulting to 5 for field reports, or make it dynamic
+                        bestRating: "5",
+                    },
+                }),
+            },
+        ],
+    });
 }
 
 useSeoMeta({
@@ -35,19 +64,15 @@ defineOgImage("Template", {
 </script>
 
 <template>
-    <div v-if="update">
+    <section v-if="update">
         <header class="mb-8 border-b pb-6">
             <h1 class="text-3xl font-bold mb-2">{{ update.title }}</h1>
-            <div class="flex items-center gap-4 text-sm text-gray-500">
+            <div class="flex items-center gap-4 text-sm">
                 <span>📅 {{ update.date }}</span>
                 <div class="flex gap-1">
-                    <UBadge
-                        v-for="v in update.vibe"
-                        :key="v"
-                        size="xs"
-                        variant="soft"
-                        >{{ v }}</UBadge
-                    >
+                    <UBadge v-for="v in update.vibe" :key="v" variant="soft">{{
+                        v
+                    }}</UBadge>
                 </div>
             </div>
         </header>
@@ -64,5 +89,5 @@ defineOgImage("Template", {
         >
             Back to {{ props.parkSlug.replace(/-/g, " ") }}
         </UButton>
-    </div>
+    </section>
 </template>
