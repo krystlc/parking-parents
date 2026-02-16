@@ -11,7 +11,7 @@ Parking Parents is a high-utility discovery platform for parents. It bridges the
 - [x] **TASK-102:** Develop "Search as I move" map bounds re-fetching for real-time park discovery.
 - [x] **TASK-103:** Create a sliding "Park Preview Card" for mobile map interactions (drawer-style).
 - [x] **TASK-104:** Build multi-select filtering logic for Zod-validated amenities (Fenced, Shaded, Rubber Floor).
-- [ ] **TASK-105:** Implement "Distance from me" sorting using the Browser Geolocation API.
+- [x] **TASK-105:** Implement "Distance from me" sorting using the Browser Geolocation API.
 
 ### 📄 Content Architecture (Parks & Field Reports)
 - [x] **TASK-201:** Develop a `Breadcrumb` component with dynamic Nuxt Content path injection (Park > Update).
