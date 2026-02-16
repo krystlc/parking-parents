@@ -1,4 +1,5 @@
-import { defineCollection, defineContentConfig, z } from "@nuxt/content";
+import { defineCollection, defineContentConfig } from "@nuxt/content";
+import { z } from 'zod/v4'
 
 // 1. Define the "Source of Truth" for your filters
 export const TERRAIN_TYPES = ["rubber", "woodchips", "paved", "grass"] as const;
@@ -32,14 +33,20 @@ const parkSchema = z.object({
   ageGroup: z.array(z.enum(AGE_GROUPS)),
 
   // Optional photo for the Map Drawer/Card
-  featuredImage: z.string().url().optional(),
+  featuredImage: z.url().optional(),
 });
 
 const updateSchema = z.object({
   title: z.string().min(5).max(70),
   description: z.string().max(160),
-  date: z.string().date(), // Built-in Zod date string validation
-  // parkId removed - we will use the file path logic instead
+  date: z
+    .string()
+    // Ensure the input string is 8 characters long and contains only digits
+    .regex(/^\d{8}$/, { message: "Must be in YYYYMMDD format" })
+    // Transform "YYYYMMDD" into "YYYY-MM-DD"
+    .transform((val) => `${val.substring(0, 4)}-${val.substring(4, 6)}-${val.substring(6, 8)}`)
+    // Validate that the new string is a valid ISO date (e.g., checks for valid month/day combinations)
+    .pipe(z.iso.date()),
   vibe: z.array(z.string()).min(1),
   author: z.string().default("Pops"),
 })

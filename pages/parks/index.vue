@@ -30,6 +30,7 @@
                 <ParkMap
                     :locations="filteredParks"
                     @select-park="openPreview"
+                    @move-end="handleMoveEnd"
                 />
             </ClientOnly>
         </aside>
@@ -88,21 +89,37 @@ watch(
     { deep: true },
 );
 
-// 3. The filtering logic remains the same
+const currentBounds = ref<any>(null);
+
+// Update bounds whenever the map moves
+const handleMoveEnd = (bounds: any) => {
+    currentBounds.value = bounds;
+};
+
 const filteredParks = computed(() => {
     if (!allParks.value) return [];
+
     return allParks.value.filter((park) => {
-        if (
-            activeFilters.value.searchQuery &&
-            !park.title
-                .toLowerCase()
-                .includes(activeFilters.value.searchQuery.toLowerCase())
-        )
-            return false;
+        // 1. Map Bounds Filter (The "Search as I move" core)
+        if (currentBounds.value) {
+            const { _southWest, _northEast } = currentBounds.value;
+            const [lat, lng] = park.coordinates; // Using your [lat, lng] tuple
+
+            if (!lat || !lng) return false;
+
+            const isVisible =
+                lat >= _southWest.lat &&
+                lat <= _northEast.lat &&
+                lng >= _southWest.lng &&
+                lng <= _northEast.lng;
+
+            if (!isVisible) return false;
+        }
+
+        // 2. Your existing Amenity Filters
         if (activeFilters.value.isFullyFenced && !park.fenced) return false;
         if (activeFilters.value.hasShade && !park.shade) return false;
 
-        // Add logic for Essentials and Terrain here as well
         return true;
     });
 });

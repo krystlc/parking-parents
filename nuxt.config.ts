@@ -2,7 +2,14 @@
 export default defineNuxtConfig({
   compatibilityDate: "2026-02-09",
   devtools: { enabled: process.env.NODE_ENV !== "production" },
-  modules: ["@nuxt/ui", "@nuxt/content", "@nuxtjs/leaflet", "@nuxtjs/sitemap", "@vueuse/nuxt", 'nuxt-og-image'],
+  modules: [
+    "@nuxt/ui",
+    "@nuxt/content",
+    "@nuxtjs/leaflet",
+    "@nuxtjs/sitemap",
+    "@vueuse/nuxt",
+    'nuxt-og-image',
+  ],
   css: ["~/assets/css/main.css"],
   site: {
     url: "https://parkingparents.com",

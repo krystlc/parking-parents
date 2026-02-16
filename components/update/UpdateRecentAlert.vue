@@ -8,7 +8,7 @@ const { data: latestReport } = await useAsyncData(
     `latest-condition-${props.parkId}`,
     () => {
         return queryCollection("updates")
-            .where("parkId", "=", props.parkId)
+            .where("path", "LIKE", `/parks/${props.parkId}/%`)
             .order("date", "DESC")
             .first();
     },

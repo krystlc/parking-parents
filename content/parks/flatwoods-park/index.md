@@ -1,10 +1,17 @@
 ---
 title: Flatwoods Park
 description: Wilderness preserve with a 7-mile paved loop road for cycling & skating plus birding & picnic areas.
+
 fenced: false
 shade: false
 restrooms: true
+
 terrain: paved
+address:
+  street: 18205 Bruce B Downs Blvd
+  city: Tampa
+  state: FL
+  zip: 33647
 coordinates: [28.1140756, -82.3064378]
 ---
 

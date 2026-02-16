@@ -5,7 +5,12 @@ fenced: true
 shade: true
 restrooms: false
 terrain: paved
-coordinates: [28.1496097,-82.3167388]
+address:
+  street: 10310 Lion's Den Drive
+  city: Tampa
+  state: FL 
+  zip: 33647
+coordinates: [28.156576, -82.319119]
 ---
 
 deets coming soon

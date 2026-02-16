@@ -18,14 +18,14 @@ const siblings = computed(() => {
             const distance = calculateDistance(
                 props.currentPark.coordinates[0],
                 props.currentPark.coordinates[1],
-                p.coordinates[0],
-                p.coordinates[1],
+                p.coordinates[0]!,
+                p.coordinates[1]!,
             );
 
             // Calculate "Tag Match" score for fallback
             const sharedTags = props.currentPark.ageGroup?.filter(
                 (tag: ParksCollectionItem["ageGroup"][number]) =>
-                    p.ageGroup.includes(tag),
+                    p.ageGroup?.includes(tag),
             ).length;
 
             return { ...p, distance, sharedTags };

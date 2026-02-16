@@ -77,7 +77,7 @@ defineOgImage("Template", {
             </div>
         </header>
 
-        <div class="park-prose">
+        <div class="prose">
             <ContentRenderer :value="update" />
         </div>
 

@@ -5,7 +5,7 @@
         :center="locations[0]?.coordinates || [0, 0]"
         :use-global-leaflet="false"
         @ready="onMapReady"
-        @moveend="updateClusters"
+        @moveend="onMoveEnd"
     >
         <LTileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -50,10 +50,17 @@ import { ref, shallowRef } from "vue";
 import Supercluster from "supercluster";
 import type { ParksCollectionItem } from "@nuxt/content";
 
-const emit = defineEmits(["select-park"]);
+const emit = defineEmits(["select-park", "move-end"]);
 const props = defineProps<{
     locations: ParksCollectionItem[];
 }>();
+
+// LMap event handler
+const onMoveEnd = (event: any) => {
+    const map = event.target;
+    emit("move-end", map.getBounds());
+    updateClusters();
+};
 
 const mapInstance = shallowRef<any>(null);
 const visibleFeatures = ref<any[]>([]);
@@ -79,6 +86,7 @@ index.load(points as any);
 const onMapReady = (map: any) => {
     mapInstance.value = map;
     updateClusters();
+    emit("move-end", map.getBounds());
 };
 
 const updateClusters = () => {

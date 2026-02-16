@@ -5,12 +5,16 @@ const props = defineProps<{
 
 // Fetch all updates where the parkId matches the current park
 const { data: reports, status } = await useAsyncData(
-    `reports-for-${props.parkId}`,
+    `reports-for-${props.parkId}`, // Using slug for unique cache key
     () => {
-        return queryCollection("updates")
-            .where("parkId", "=", props.parkId)
-            .order("date", "DESC") // Show the freshest reports first
-            .all();
+        return (
+            queryCollection("updates")
+                // We look for any update whose path starts with the park's directory
+                // This effectively "joins" the updates to the master park
+                .where("path", "LIKE", `/parks/${props.parkId}/%`)
+                .order("date", "DESC")
+                .all()
+        );
     },
 );
 </script>
