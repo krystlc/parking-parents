@@ -10,10 +10,13 @@ const { data: page } = await useAsyncData(`park-master-${props.slug}`, () => {
 const { data: latestUpdate } = await useAsyncData(
     `latest-vibe-${props.slug}`,
     () => {
-        return queryCollection("updates")
-            .where("parkId", "=", props.slug)
-            .order("date", "DESC")
-            .first();
+        return (
+            queryCollection("updates")
+                // Use path matching to find files inside the park's specific folder
+                .where("path", "LIKE", `/parks/${props.slug}/%`)
+                .order("date", "DESC")
+                .first()
+        );
     },
 );
 
@@ -30,16 +33,21 @@ if (page.value) {
         articleTag: page.value.ageGroup,
     });
 
+    // 1. Construct the Schema Address String for basic fields
+    const fullAddressString = `${page.value.address.street}, ${page.value.address.city}, ${page.value.address.state}`;
+
+    // 2. Prepare Amenities for Schema
     const schemaAmenities = [
         { name: "Fenced", value: page.value.fenced },
         { name: "Restrooms", value: page.value.restrooms },
         { name: "Shaded", value: page.value.shade },
+        { name: "Stroller Friendly", value: page.value.strollerFriendly },
     ]
-        .filter((a) => a.value) // Only show features the park actually has
+        .filter((a) => a.value)
         .map((a) => ({
             "@type": "LocationFeatureSpecification",
             name: a.name,
-            value: true,
+            value: "true",
         }));
 
     useHead({
@@ -52,12 +60,13 @@ if (page.value) {
                     "@id": `https://parkingparents.com/parks/${props.slug}#park`, // Unique ID for cross-referencing
                     name: page.value.title,
                     description: page.value.description,
-                    image: page.value.featuredImage,
+                    image: page.value.featuredImage, // Now correctly typed as a URL
                     address: {
                         "@type": "PostalAddress",
-                        streetAddress: page.value.address,
-                        addressLocality: "Tampa", // Replace with your dynamic city field if available
-                        addressRegion: "FL",
+                        streetAddress: page.value.address.street,
+                        addressLocality: page.value.address.city,
+                        addressRegion: page.value.address.state,
+                        postalCode: page.value.address.zip,
                     },
                     geo: {
                         "@type": "GeoCoordinates",

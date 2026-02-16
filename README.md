@@ -29,7 +29,7 @@ Parking Parents is a high-utility discovery platform for parents. It bridges the
 ### 📈 SEO & Metadata Authority
 - [x] **TASK-401:** Automate OpenGraph (OG) image generation for Park pages using `@nuxtjs/og-image`.
 - [x] **TASK-402:** Standardize JSON-LD Schema.org `Place` and `Review` snippets for Park entities.
-- [ ] **TASK-403:** Implement Zod-based frontmatter validation to ensure 100% metadata coverage.
+- [x] **TASK-403:** Implement Zod-based frontmatter validation to ensure 100% metadata coverage.
 - [x] **TASK-404:** Configure `sitemap.xml` to prioritize Master Park pages over individual Field Reports.
 
 ### 💌 Conversion & Growth
