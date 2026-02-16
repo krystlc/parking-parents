@@ -12,14 +12,33 @@ export default defineNuxtConfig({
   robots: {
     disallow: ["/admin", "/search?*"], // Don't index messy search result strings
   },
-  // 1. Force static generation for specific routes
+  // Force static generation for specific routes
   routeRules: {
     '/': { prerender: true },
-    '/parks/**': { prerender: true },
-    '/kit/**': { prerender: true },
+    '/parks/*/': {
+      prerender: true,
+      sitemap: {
+        priority: 1.0,
+        changefreq: 'weekly'
+      }
+    },
+    '/parks/*/*': {
+      prerender: true,
+      sitemap: {
+        priority: 0.5,
+        changefreq: 'monthly'
+      }
+    },
+    '/kit/**': {
+      prerender: true,
+      sitemap: {
+        priority: 0.8,
+        changefreq: 'monthly'
+      }
+    },
   },
 
-  // 2. Optimization for Content v3
+  // Optimization for Content v3
   // This helps Nuxt crawl your content files during 'nuxt generate'
   nitro: {
     prerender: {
@@ -28,7 +47,7 @@ export default defineNuxtConfig({
     }
   },
 
-  // 3. Sitemap - Ensure it's generated during build
+  // Sitemap - Ensure it's generated during build
   sitemap: {
     zeroRuntime: true,
     hostname: 'https://parkingparents.com',
@@ -36,7 +55,9 @@ export default defineNuxtConfig({
     defaults: {
       changefreq: "weekly",
       priority: 0.8,
+      lastmod: new Date().toISOString(),
     },
-    // We can filter collections or adjust individual paths here
+    // Path-based Prioritization
+    strictNuxtContentAds: true, // Optimizes for Nuxt Content v3
   },
 });
