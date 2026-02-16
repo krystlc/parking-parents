@@ -4,12 +4,27 @@
             <ParkFilter @update:filters="(val) => (activeFilters = val)" />
         </aside>
         <main class="space-y-4 hidden md:block">
+            <div
+                class="flex items-center justify-between p-3 rounded-lg border shadow-sm"
+            >
+                <div class="flex items-center gap-2">
+                    <UIcon name="i-lucide-map" class="text-primary-500" />
+                    <span class="text-sm font-medium">Sort by proximity?</span>
+                </div>
+                <USwitch
+                    v-model="isSortingByDistance"
+                    @update:model-value="
+                        (val: boolean) => val && enableLocation()
+                    "
+                />
+            </div>
+
             <p class="text-sm text-muted">
-                Showing {{ filteredParks.length }} parks
+                Showing {{ finalParks.length }} parks
             </p>
 
             <ULink
-                v-for="park in filteredParks"
+                v-for="park in finalParks"
                 :key="park.id"
                 :to="park.path"
                 class="block"
@@ -17,7 +32,7 @@
                 <ParkCard :park="park" />
             </ULink>
 
-            <div v-if="filteredParks.length === 0" class="text-center py-10">
+            <div v-if="finalParks.length === 0" class="text-center py-10">
                 <UIcon
                     name="i-lucide-frown"
                     class="w-10 h-10 mx-auto text-gray-400"
@@ -28,7 +43,7 @@
         <aside>
             <ClientOnly>
                 <ParkMap
-                    :locations="filteredParks"
+                    :locations="finalParks"
                     @select-park="openPreview"
                     @move-end="handleMoveEnd"
                 />
@@ -50,6 +65,8 @@
 </template>
 
 <script setup lang="ts">
+import { useUserLocation } from "~/composables/useUserLocation";
+
 const route = useRoute();
 const router = useRouter();
 
@@ -122,6 +139,36 @@ const filteredParks = computed(() => {
 
         return true;
     });
+});
+
+const { userCoords, resume } = useUserLocation();
+const isSortingByDistance = ref(false);
+
+// Function to trigger location request
+const enableLocation = () => {
+    resume();
+    isSortingByDistance.value = true;
+};
+
+const finalParks = computed(() => {
+    let list = [...filteredParks.value];
+
+    if (isSortingByDistance.value && userCoords.value) {
+        list = list
+            .map((park) => ({
+                ...park,
+                // Calculate distance from user to park
+                distanceFromMe: calculateDistance(
+                    userCoords.value![0],
+                    userCoords.value![1],
+                    park.coordinates[0]!,
+                    park.coordinates[1]!,
+                ),
+            }))
+            .sort((a, b) => (a.distanceFromMe || 0) - (b.distanceFromMe || 0));
+    }
+
+    return list;
 });
 
 const isPreviewOpen = ref(false);
