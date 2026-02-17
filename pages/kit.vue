@@ -1,12 +1,12 @@
 <template>
-    <UContainer class="grid grid-cols-1 md:grid-cols-12 gap-12">
-        <article class="prose col-span-8">
+    <UContainer class="grid grid-cols-1 md:grid-cols-12 gap-12 py-12">
+        <UCard class="prose col-span-8" variant="subtle">
             <ContentRenderer :value="page" />
-        </article>
+        </UCard>
         <aside class="hidden md:block md:col-span-4">
-            <div class="sticky top-24">
+            <UCard class="sticky top-0" variant="outline">
                 <UiTableOfContents :links="page.body.toc.links" />
-            </div>
+            </UCard>
         </aside>
     </UContainer>
 </template>

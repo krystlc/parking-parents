@@ -1,46 +1,22 @@
 <template>
-    <UContainer as="main" class="grid md:grid-cols-3 gap-8">
+    <div class="relative">
         <aside>
-            <ParkFilter @update:filters="(val) => (activeFilters = val)" />
+            <UButton
+                title="Toggle Filter"
+                @click="toggleFilter = !toggleFilter"
+                icon="i-lucide-list-filter-plus"
+                color="neutral"
+                size="xl"
+                variant="outline"
+                :ui="{
+                    leadingIcon: 'text-secondary',
+                }"
+                class="absolute top-2 right-2 z-1000"
+            >
+                Filter
+            </UButton>
         </aside>
-        <main class="space-y-4 hidden md:block">
-            <div
-                class="flex items-center justify-between p-3 rounded-lg border shadow-sm"
-            >
-                <div class="flex items-center gap-2">
-                    <UIcon name="i-lucide-map" class="text-primary-500" />
-                    <span class="text-sm font-medium">Sort by proximity?</span>
-                </div>
-                <USwitch
-                    v-model="isSortingByDistance"
-                    @update:model-value="
-                        (val: boolean) => val && enableLocation()
-                    "
-                />
-            </div>
-
-            <p class="text-sm text-muted">
-                Showing {{ finalParks.length }} parks
-            </p>
-
-            <ULink
-                v-for="park in finalParks"
-                :key="park.id"
-                :to="park.path"
-                class="block"
-            >
-                <ParkCard :park="park" />
-            </ULink>
-
-            <div v-if="finalParks.length === 0" class="text-center py-10">
-                <UIcon
-                    name="i-lucide-frown"
-                    class="w-10 h-10 mx-auto text-gray-400"
-                />
-                <p class="mt-2 text-gray-600">No parks match your filters.</p>
-            </div>
-        </main>
-        <aside>
+        <main class="col-span-2">
             <ClientOnly>
                 <ParkMap
                     :locations="finalParks"
@@ -48,11 +24,31 @@
                     @move-end="handleMoveEnd"
                 />
             </ClientOnly>
-        </aside>
+        </main>
+        <USlideover
+            v-model:open="toggleFilter"
+            :side="isSmall ? 'bottom' : 'left'"
+            class="md:max-w-lg"
+        >
+            <template #content>
+                <ClientOnly>
+                    <ParkFilter
+                        @update:filters="
+                            (val) => {
+                                activeFilters = val;
+                                toggleFilter = false;
+                            }
+                        "
+                        @on:close="toggleFilter = false"
+                    />
+                </ClientOnly>
+            </template>
+        </USlideover>
         <USlideover
             v-model:open="isPreviewOpen"
-            side="bottom"
+            :side="isSmall ? 'bottom' : 'right'"
             :ui="{ height: 'max-h-[40vh]' }"
+            class="md:max-w-sm"
         >
             <template #content>
                 <ParkPreview
@@ -61,11 +57,21 @@
                 />
             </template>
         </USlideover>
-    </UContainer>
+    </div>
 </template>
 
 <script setup lang="ts">
 import { useUserLocation } from "~/composables/useUserLocation";
+const breakpoints = useBreakpoints({
+    sm: 640,
+});
+const isSmall = breakpoints.smaller("sm");
+
+const toggleFilter = ref(false);
+
+definePageMeta({
+    layout: "fullscreen",
+});
 
 const route = useRoute();
 const router = useRouter();
@@ -93,7 +99,7 @@ watch(
     (newFilters) => {
         router.replace({
             query: {
-                q: newFilters.searchQuery || undefined,
+                q: newFilters?.searchQuery || undefined,
                 e: newFilters.essentials.length
                     ? newFilters.essentials
                     : undefined,

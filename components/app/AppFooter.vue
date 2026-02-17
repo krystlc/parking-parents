@@ -1,5 +1,5 @@
 <template>
-    <UContainer as="footer" class="py-24">
+    <UContainer as="footer" class="py-24 text-muted">
         <div class="mx-auto max-w-md">
             <strong class="block text-center text-xl font-bold md:text-3xl">
                 Want us to email you with the latest field reports?
@@ -73,7 +73,7 @@
             </div>
         </div>
 
-        <div class="mt-16 border-t pt-8">
+        <div class="mt-16 border-t border-muted pt-8">
             <p class="text-center text-xs/relaxed">
                 © ParkingParents.com 2022. All rights reserved.
 

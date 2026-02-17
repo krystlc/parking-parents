@@ -1,6 +1,6 @@
 <template>
     <LMap
-        style="height: 480px"
+        style="height: 100vh"
         :zoom="12"
         :center="locations[0]?.coordinates || [0, 0]"
         :use-global-leaflet="false"

@@ -1,7 +1,7 @@
 <template>
-    <div>
+    <UContainer as="header" class="p-2 border-b border-muted">
         <AppHeader />
-        <slot />
-        <AppFooter />
-    </div>
+    </UContainer>
+    <slot />
+    <AppFooter />
 </template>

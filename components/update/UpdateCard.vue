@@ -27,8 +27,8 @@
 
         <UButton
             :to="post.path"
-            class="mt-4 flex items-center text-xs font-semibold"
-            variant="link"
+            class="mt-4"
+            variant="soft"
             icon="i-lucide-arrow-right"
             trailing
         >

@@ -7,7 +7,7 @@ const updateSlug = slugArray[1];
 </script>
 
 <template>
-    <UContainer as="main">
+    <UContainer as="main" class="py-12 space-y-4">
         <AppBreadcrumb />
         <ParkMasterPage v-if="!isUpdate" :slug="parkSlug" />
         <ParkUpdatePage

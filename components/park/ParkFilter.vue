@@ -2,7 +2,18 @@
     <UCard>
         <template #header>
             <div class="flex flex-col gap-4">
-                <h2 class="text-2xl font-bold">Find Your Perfect Park</h2>
+                <h2
+                    class="text-2xl font-bold flex justify-between items-center"
+                >
+                    Find Your Perfect Park
+
+                    <UButton
+                        color="gray"
+                        variant="ghost"
+                        icon="i-lucide-x"
+                        @click="emit('on:close')"
+                    />
+                </h2>
                 <UInput
                     v-model="filters.searchQuery"
                     icon="i-lucide-search"
@@ -72,21 +83,26 @@
         <template #footer>
             <div class="flex justify-between items-center">
                 <UButton
-                    variant="ghost"
-                    color="gray"
+                    type="button"
+                    color="secondary"
+                    variant="soft"
                     @click="
-                        Object.assign(filters, {
-                            searchQuery: '',
-                            essentials: [],
-                            terrain: [],
-                            vibe: null,
-                            isFullyFenced: false,
-                            hasShade: false,
-                        })
+                        () => {
+                            Object.assign(filters, {
+                                searchQuery: '',
+                                essentials: [],
+                                terrain: [],
+                                vibe: null,
+                                isFullyFenced: false,
+                                hasShade: false,
+                            });
+                            emit('on:close');
+                        }
                     "
                 >
                     Clear All Filters
                 </UButton>
+                <UButton @click="emit('update:filters')"> Apply </UButton>
             </div>
         </template>
     </UCard>
@@ -143,7 +159,7 @@ const vibeOptions = [
 ];
 
 // Logic to emit filters to a parent component or store
-const emit = defineEmits(["update:filters"]);
+const emit = defineEmits(["update:filters", "on:close"]);
 watch(
     filters,
     (newVal) => {

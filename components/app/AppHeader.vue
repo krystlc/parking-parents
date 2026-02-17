@@ -29,7 +29,5 @@ const items = ref<NavigationMenuItem[]>([
 </script>
 
 <template>
-    <UContainer class="w-fit py-4" as="header">
-        <UNavigationMenu :items="items" color="info" />
-    </UContainer>
+    <UNavigationMenu :items="items" color="info" />
 </template>

@@ -9,7 +9,7 @@
                         {{ selectedPark.title }}
                     </h2>
                     <p class="text-sm">
-                        {{ selectedPark.address }}
+                        {{ selectedPark.address.street }}
                     </p>
                 </div>
                 <UButton

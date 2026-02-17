@@ -21,20 +21,20 @@
         @apply text-2xl font-bold mt-10 mb-4 pb-2;
     }
     & h3 {
-        @apply text-xl font-semibold mt-8 mb-3;
+        @apply text-xl font-semibold mt-8 mb-4;
     }
 
     /* Body Text */
     & p {
-        @apply leading-relaxed mb-5;
+        @apply leading-relaxed mb-4 text-muted;
     }
 
     /* Lists: Fixes the lack of bullets in raw HTML */
     & ul {
-        @apply list-disc list-inside mb-6 space-y-2 ml-2;
+        @apply list-disc list-outside mb-6 space-y-2 pl-8 text-muted;
     }
     & ol {
-        @apply list-decimal list-inside mb-6 space-y-2 ml-2;
+        @apply list-decimal list-outside mb-6 space-y-2 ml-4;
     }
     & li {
         @apply pl-2;
@@ -47,10 +47,10 @@
     /* The "Parent Tip" Blockquote */
     & blockquote {
         @apply border-l-4 border-primary-500 bg-primary-50/50 dark:bg-primary-900/10
-             py-4 px-6 my-8 rounded-r-lg italic text-gray-700 dark:text-gray-300;
+             py-4 px-6 my-8 rounded-r-lg italic;
 
         & p {
-            @apply mb-0;
+            @apply mb-0 text-default;
         }
     }
 
@@ -61,6 +61,10 @@
 
     /* Horizontal Rules */
     & hr {
-        @apply my-10 border-gray-200 dark:border-gray-800;
+        @apply my-8 border-muted;
+    }
+
+    & td {
+        @apply leading-relaxed mb-4 text-muted first:pr-8 border border-muted p-2;
     }
 }

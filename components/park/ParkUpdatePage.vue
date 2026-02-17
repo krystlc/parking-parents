@@ -64,8 +64,8 @@ defineOgImage("Template", {
 </script>
 
 <template>
-    <section v-if="update">
-        <header class="mb-8 border-b pb-6">
+    <UCard v-if="update" class="max-w-3xl" variant="subtle">
+        <template #header class="mb-8 border-b pb-6">
             <h1 class="text-3xl font-bold mb-2">{{ update.title }}</h1>
             <div class="flex items-center gap-4 text-sm">
                 <span>📅 {{ update.date }}</span>
@@ -75,19 +75,21 @@ defineOgImage("Template", {
                     }}</UBadge>
                 </div>
             </div>
-        </header>
+        </template>
 
         <div class="prose">
             <ContentRenderer :value="update" />
         </div>
 
-        <UButton
-            :to="`/parks/${props.parkSlug}`"
-            variant="link"
-            icon="i-lucide-arrow-left"
-            class="mt-8"
-        >
-            Back to {{ props.parkSlug.replace(/-/g, " ") }}
-        </UButton>
-    </section>
+        <template #footer>
+            <UButton
+                :to="`/parks/${props.parkSlug}`"
+                variant="link"
+                icon="i-lucide-arrow-left"
+                class="mt-8"
+            >
+                Back to {{ props.parkSlug.replace(/-/g, " ") }}
+            </UButton>
+        </template>
+    </UCard>
 </template>
