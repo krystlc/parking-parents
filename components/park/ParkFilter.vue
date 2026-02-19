@@ -15,7 +15,7 @@
                     />
                 </h2>
                 <UInput
-                    v-model="filters.searchQuery"
+                    v-model="filters.q"
                     icon="i-lucide-search"
                     :trailing="false"
                     placeholder="Search by park name or neighborhood..."
@@ -29,25 +29,15 @@
                     <UIcon name="i-lucide-shield-check" /> Safety & Essentials
                 </h3>
                 <UCheckbox
-                    v-model="filters.isFullyFenced"
+                    v-model="filters.f"
                     label="Fully Fenced-In"
                     help="Must-have for 'runners'"
                 />
                 <UCheckbox
-                    v-model="filters.hasShade"
+                    v-model="filters.s"
                     label="Shaded Play Area"
                     help="Keeps slides cool"
                 />
-
-                <div class="space-y-2">
-                    <p class="text-sm font-medium">Amenities</p>
-                    <USelect
-                        v-model="filters.essentials"
-                        :items="essentialOptions"
-                        multiple
-                        placeholder="Select features"
-                    />
-                </div>
             </div>
 
             <div class="space-y-2">
@@ -55,28 +45,10 @@
                     <UIcon name="i-lucide-accessibility" /> Terrain & Access
                 </h3>
                 <URadioGroup
-                    v-model="filters.terrain"
+                    v-model="filters.t"
                     legend="Surface Type"
                     :items="terrainOptions"
                 />
-            </div>
-
-            <div class="space-y-2">
-                <h3 class="font-semibold flex items-center gap-2">
-                    <UIcon name="i-lucide-sparkles" /> Park Vibe
-                </h3>
-                <USelect
-                    v-model="filters.vibe"
-                    :items="vibeOptions"
-                    placeholder="What's the mood today?"
-                />
-
-                <UAlert
-                    title="Parent Tip:"
-                    variant="soft"
-                    description="Check the Social Hub vibe if you're looking for other parents to chat with!"
-                >
-                </UAlert>
             </div>
         </div>
 
@@ -86,61 +58,57 @@
                     type="button"
                     color="secondary"
                     variant="soft"
-                    @click="
-                        () => {
-                            Object.assign(filters, {
-                                searchQuery: '',
-                                essentials: [],
-                                terrain: [],
-                                vibe: null,
-                                isFullyFenced: false,
-                                hasShade: false,
-                            });
-                            emit('on:close');
-                        }
-                    "
+                    @click="handleClear"
                 >
                     Clear All Filters
                 </UButton>
-                <UButton @click="emit('update:filters')"> Apply </UButton>
+                <UButton type="button" @click="emit('on:close')">
+                    Apply
+                </UButton>
             </div>
         </template>
     </UCard>
 </template>
 
 <script setup lang="ts">
-// Define the structure for our filters
-const filters = reactive({
-    searchQuery: "",
-    essentials: [],
-    terrain: [],
-    vibe: "",
-    isFullyFenced: false,
-    hasShade: false,
-});
+import type { ParksCollectionItem } from "@nuxt/content";
+import { DEFAULT_FILTERS, type ParkFilters } from "./park-filter.schema";
+import type { TerrainType } from "~/content.config";
 
-const essentialOptions = [
+const filters = defineModel<ParkFilters>({
+    required: true,
+    default: DEFAULT_FILTERS,
+});
+// Logic to emit filters to a parent component or store
+const emit = defineEmits(["on:close"]);
+
+// Define the structure for our filters
+const handleClear = () => {
+    filters.value = {
+        ...DEFAULT_FILTERS,
+    };
+};
+
+const essentialOptions: {
+    label: string;
+    icon: string;
+    value: keyof ParksCollectionItem;
+}[] = [
     { label: "Restrooms", value: "restrooms", icon: "i-lucide-hand" },
     {
         label: "Baby Swings",
-        value: "baby_swings",
+        value: "babySwings",
         icon: "i-lucide-smile",
     },
-    {
-        label: "Changing Tables",
-        value: "changing_tables",
-        icon: "i-lucide-beaker",
-    },
-    { label: "Water Station", value: "water", icon: "i-lucide-variable" },
 ];
 
-const terrainOptions = [
+const terrainOptions: { label: string; value: TerrainType }[] = [
     { label: "Paved Paths (Stroller friendly)", value: "paved" },
     { label: "Rubber Flooring", value: "rubber" },
-    { label: "Wood Chips", value: "chips" },
+    { label: "Wood Chips", value: "woodchips" },
 ];
 
-const vibeOptions = [
+const vibeOptions: { label: string; description: string; value: string }[] = [
     {
         label: "Energy Burner",
         value: "energy",
@@ -157,14 +125,4 @@ const vibeOptions = [
         description: "Busy, great for playdates",
     },
 ];
-
-// Logic to emit filters to a parent component or store
-const emit = defineEmits(["update:filters", "on:close"]);
-watch(
-    filters,
-    (newVal) => {
-        emit("update:filters", newVal);
-    },
-    { deep: true },
-);
 </script>

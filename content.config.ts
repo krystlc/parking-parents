@@ -3,6 +3,7 @@ import { z } from 'zod/v4'
 
 // 1. Define the "Source of Truth" for your filters
 export const TERRAIN_TYPES = ["rubber", "woodchips", "paved", "grass"] as const;
+export type TerrainType = typeof TERRAIN_TYPES[number]
 export const PARKING_TYPES = ["free", "paid", "none"] as const;
 export const AGE_GROUPS = ["infant", "toddler", "young_child", "big_kid"] as const;
 

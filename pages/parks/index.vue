@@ -33,12 +33,7 @@
             <template #content>
                 <ClientOnly>
                     <ParkFilter
-                        @update:filters="
-                            (val) => {
-                                activeFilters = val;
-                                toggleFilter = false;
-                            }
-                        "
+                        v-model="activeFilters"
                         @on:close="toggleFilter = false"
                     />
                 </ClientOnly>
@@ -61,6 +56,10 @@
 </template>
 
 <script setup lang="ts">
+import {
+    ParkFilterSchema,
+    type ParkFilters,
+} from "~/components/park/park-filter.schema";
 import { useUserLocation } from "~/composables/useUserLocation";
 const breakpoints = useBreakpoints({
     sm: 640,
@@ -81,31 +80,23 @@ const { data: allParks } = await useAsyncData("parks", () => {
 });
 
 // 1. Initialize filters from URL query parameters (or defaults)
-const activeFilters = ref({
-    searchQuery: (route.query.q as string) || "",
-    essentials: Array.isArray(route.query.e)
-        ? route.query.e
-        : route.query.e
-          ? [route.query.e]
-          : [],
-    terrain: (route.query.t as string) || "",
-    isFullyFenced: route.query.f === "true",
-    hasShade: route.query.s === "true",
-});
-
+const activeFilters = ref<ParkFilters>(ParkFilterSchema.parse(route.query));
 // 2. Watch for filter changes and update the URL (Sync State -> URL)
 watch(
     activeFilters,
     (newFilters) => {
         router.replace({
+            path: "/parks",
             query: {
-                q: newFilters?.searchQuery || undefined,
-                e: newFilters.essentials.length
-                    ? newFilters.essentials
-                    : undefined,
-                t: newFilters.terrain || undefined,
-                f: newFilters.isFullyFenced ? "true" : undefined,
-                s: newFilters.hasShade ? "true" : undefined,
+                q: newFilters.q,
+                f: newFilters.f ? "true" : "false",
+                s: String(newFilters.s),
+                r: String(newFilters.r),
+                sw: String(newFilters.sw),
+                st: String(newFilters.st),
+                t: newFilters.t,
+                p: newFilters.p,
+                age: newFilters.age,
             },
         });
     },
@@ -123,25 +114,38 @@ const filteredParks = computed(() => {
     if (!allParks.value) return [];
 
     return allParks.value.filter((park) => {
-        // 1. Map Bounds Filter (The "Search as I move" core)
+        // 1. Bounds check (keep as is)
         if (currentBounds.value) {
             const { _southWest, _northEast } = currentBounds.value;
-            const [lat, lng] = park.coordinates; // Using your [lat, lng] tuple
-
+            const [lat, lng] = park.coordinates;
             if (!lat || !lng) return false;
-
             const isVisible =
                 lat >= _southWest.lat &&
                 lat <= _northEast.lat &&
                 lng >= _southWest.lng &&
                 lng <= _northEast.lng;
-
             if (!isVisible) return false;
         }
 
-        // 2. Your existing Amenity Filters
-        if (activeFilters.value.isFullyFenced && !park.fenced) return false;
-        if (activeFilters.value.hasShade && !park.shade) return false;
+        // 2. Search Query (Title or Neighborhood)
+        if (activeFilters.value.q) {
+            const q = activeFilters.value.q.toLowerCase();
+            const matchesTitle = park.title?.toLowerCase().includes(q);
+            const matchesAddress = park.address?.street
+                ?.toLowerCase()
+                .includes(q);
+            if (!matchesTitle && !matchesAddress) return false;
+        }
+
+        // 3. Simple Booleans
+        if (activeFilters.value.f && !park.fenced) return false;
+        if (activeFilters.value.s && !park.shade) return false;
+
+        // 5. Terrain (Match selected radio to park terrain array)
+        if (activeFilters.value.t && activeFilters.value.t.length > 0) {
+            if (!park.terrain?.some((t) => activeFilters.value.t?.includes(t)))
+                return false;
+        }
 
         return true;
     });
