@@ -4,7 +4,8 @@ description: It's nice.
 fenced: true
 shade: true
 restrooms: false
-terrain: paved
+terrain: 
+  - paved
 address:
   street: 10310 Lion's Den Drive
   city: Tampa

@@ -1,8 +1,8 @@
 <template>
     <LMap
         style="height: 100vh"
-        :zoom="12"
-        :center="locations[0]?.coordinates || [0, 0]"
+        :zoom="zoom"
+        :center="center"
         :use-global-leaflet="false"
         @ready="onMapReady"
         @moveend="onMoveEnd"
@@ -46,52 +46,75 @@
 </template>
 
 <script setup lang="ts">
-import { ref, shallowRef } from "vue";
+import { ref, shallowRef, watch, onMounted } from "vue";
 import Supercluster from "supercluster";
 import type { ParksCollectionItem } from "@nuxt/content";
 
 const emit = defineEmits(["select-park", "move-end"]);
-const props = defineProps<{
-    locations: ParksCollectionItem[];
-}>();
-
-// LMap event handler
-const onMoveEnd = (event: any) => {
-    const map = event.target;
-    emit("move-end", map.getBounds());
-    updateClusters();
-};
+const props = defineProps<{ locations: ParksCollectionItem[] }>();
 
 const mapInstance = shallowRef<any>(null);
 const visibleFeatures = ref<any[]>([]);
+const center = ref<[number, number]>([27.9506, -82.4572]); // Default Tampa
+const zoom = ref(12);
 
-// 1. Initialize Supercluster
-const index = new Supercluster({
-    radius: 60,
-    maxZoom: 16,
-});
+// 1. Setup Supercluster
+const index = new Supercluster({ radius: 60, maxZoom: 16 });
 
-const points = props.locations.map((park) => ({
-    type: "Feature",
-    properties: { cluster: false, parkId: park.path },
-    geometry: {
-        type: "Point",
-        coordinates: [park.coordinates[1], park.coordinates[0]],
-    },
-}));
+const updateIndex = () => {
+    const points = props.locations.map((park) => ({
+        type: "Feature",
+        properties: { cluster: false, parkId: park.path },
+        geometry: {
+            type: "Point",
+            coordinates: [park.coordinates[1], park.coordinates[0]],
+        },
+    }));
+    index.load(points as any);
+    updateClusters();
+};
 
-index.load(points as any);
+// 2. Initial View Logic (Fit Bounds or User Location)
+const setInitialView = () => {
+    if (!mapInstance.value) return;
 
-// 2. Map Event Handlers
+    if (props.locations.length > 0) {
+        // Zoom out to fit ALL filtered parks
+        const latLngs = props.locations.map((p) => [
+            p.coordinates[0],
+            p.coordinates[1],
+        ]);
+        mapInstance.value.fitBounds(latLngs, { padding: [50, 50] });
+    } else {
+        // Fallback: Try to find User
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                mapInstance.value.setView(
+                    [pos.coords.latitude, pos.coords.longitude],
+                    13,
+                );
+            },
+            () => {
+                console.log("User denied location access");
+            },
+        );
+    }
+};
+
 const onMapReady = (map: any) => {
     mapInstance.value = map;
-    updateClusters();
+    updateIndex();
+    setInitialView();
     emit("move-end", map.getBounds());
+};
+
+const onMoveEnd = (event: any) => {
+    updateClusters();
+    emit("move-end", event.target.getBounds());
 };
 
 const updateClusters = () => {
     if (!mapInstance.value) return;
-
     const b = mapInstance.value.getBounds();
     const bbox: [number, number, number, number] = [
         b.getWest(),
@@ -99,12 +122,12 @@ const updateClusters = () => {
         b.getEast(),
         b.getNorth(),
     ];
-    const zoom = mapInstance.value.getZoom();
-
-    visibleFeatures.value = index.getClusters(bbox, zoom);
+    visibleFeatures.value = index.getClusters(
+        bbox,
+        mapInstance.value.getZoom(),
+    );
 };
 
-// 3. Zoom into cluster on click
 const expandCluster = (cluster: any) => {
     const expansionZoom = Math.min(
         index.getClusterExpansionZoom(cluster.id),
@@ -115,6 +138,13 @@ const expandCluster = (cluster: any) => {
         expansionZoom,
     );
 };
+
+// Re-index when locations change
+watch(
+    () => props.locations,
+    () => updateIndex(),
+    { deep: true },
+);
 </script>
 
 <style>

@@ -15,7 +15,8 @@ restrooms: true
 babySwings: true
 strollerFriendly: true
 
-terrain: paved
+terrain: 
+  - paved
 parking: free
 ageGroup:
   - toddler

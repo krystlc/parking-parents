@@ -11,7 +11,7 @@
                 :ui="{
                     leadingIcon: 'text-secondary',
                 }"
-                class="absolute top-2 right-2 z-1000"
+                class="absolute top-2 right-2 z-1001"
             >
                 Filter
             </UButton>

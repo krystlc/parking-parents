@@ -6,7 +6,8 @@ fenced: false
 shade: false
 restrooms: true
 
-terrain: paved
+terrain: 
+  - paved
 address:
   street: 18205 Bruce B Downs Blvd
   city: Tampa

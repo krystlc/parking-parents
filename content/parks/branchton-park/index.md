@@ -4,7 +4,8 @@ description: Hey, it's brand new.
 fenced: true
 shade: true
 restrooms: true
-terrain: paved
+terrain: 
+  - paved
 
 address:
   street: 15508 Morris Bridge Rd
