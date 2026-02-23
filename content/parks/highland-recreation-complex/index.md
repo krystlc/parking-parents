@@ -23,6 +23,4 @@ ageGroup:
   - young_child
 ---
 
-cool place
-
 [Google Maps](https://maps.app.goo.gl/YiEdsKAq3vPmcme9A)

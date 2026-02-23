@@ -3,6 +3,7 @@ export default defineNuxtConfig({
   compatibilityDate: "2026-02-09",
   devtools: { enabled: process.env.NODE_ENV !== "production" },
   modules: [
+    '@netlify/nuxt',
     "@nuxt/ui",
     "@nuxt/content",
     "@nuxtjs/leaflet",

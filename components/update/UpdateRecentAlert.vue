@@ -33,7 +33,7 @@ const isRecent = computed(() => {
             variant="soft"
             color="info"
             title="Recent Field Update"
-            :description="`A parent shared a fresh update for this park on ${latestReport.date}. It might contain important info about current conditions.`"
+            :description="`A parent shared a fresh update for this park on ${$datefns.format(latestReport.date, 'P')}. It might contain important info about current conditions.`"
         >
             <template #footer>
                 <UButton

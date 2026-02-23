@@ -27,7 +27,12 @@
                 <UBadge v-if="selectedPark.shade" variant="soft" color="orange"
                     >Shaded</UBadge
                 >
-                <UBadge variant="soft">{{ selectedPark.terrain }}</UBadge>
+                <UBadge
+                    v-for="terrain of selectedPark.terrain"
+                    variant="soft"
+                    class="capitalize"
+                    >{{ terrain }}</UBadge
+                >
             </div>
 
             <p class="text-sm line-clamp-2">

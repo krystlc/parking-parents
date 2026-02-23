@@ -119,7 +119,8 @@ defineOgImage("Template", {
                     </UBadge>
                 </div>
                 <span class="text-xs text-gray-400 italic">
-                    (Reported {{ latestUpdate.date }})
+                    (Reported
+                    {{ $datefns.formatDistanceToNow(latestUpdate.date) }})
                 </span>
             </div>
         </header>
