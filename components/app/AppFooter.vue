@@ -1,30 +1,6 @@
 <template>
     <UContainer as="footer" class="py-24 text-muted">
-        <div class="mx-auto max-w-md">
-            <strong class="block text-center text-xl font-bold md:text-3xl">
-                Want us to email you with the latest field reports?
-            </strong>
-
-            <form class="mt-6">
-                <div class="relative max-w-lg">
-                    <label class="sr-only" for="email"> Email </label>
-
-                    <UInput
-                        class="w-full rounded-full p-4 pe-32 text-sm font-medium"
-                        id="email"
-                        type="email"
-                        placeholder="john@doe.com"
-                    />
-
-                    <UButton
-                        disabled
-                        class="absolute end-1 top-1/2 -translate-y-1/2 rounded-full px-5 py-3 text-sm font-medium transition"
-                    >
-                        Subscribe
-                    </UButton>
-                </div>
-            </form>
-        </div>
+        <UiNewsletterCta />
 
         <div class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 md:gap-32">
             <div class="mx-auto max-w-sm md:max-w-none">
@@ -106,3 +82,5 @@ const items = [
     },
 ];
 </script>
+
+import UiNewsletterCta from '../ui/UiNewsletterCta.vue';

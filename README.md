@@ -33,7 +33,7 @@ Parking Parents is a high-utility discovery platform for parents. It bridges the
 - [x] **TASK-404:** Configure `sitemap.xml` to prioritize Master Park pages over individual Field Reports.
 
 ### 💌 Conversion & Growth
-- [ ] **TASK-501:** Integrate a newsletter signup CTA in the footer (Mailchimp/Substack/Loops).
+- [ ] **TASK-501:** Integrate a newsletter signup CTA in the footer (Resend).
 - [ ] **TASK-502:** Design a "Park of the Month" newsletter template for automated engagement.
 - [x] **TASK-503:** Implement "Save to Favorites" using LocalStorage to encourage user stickiness.
 

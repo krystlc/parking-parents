@@ -11,6 +11,12 @@ export default defineNuxtConfig({
     "@vueuse/nuxt",
     'nuxt-og-image',
   ],
+  runtimeConfig: {
+    resendApiKey: process.env.RESEND_API_KEY, // Server-side only
+    resendAudienceId: process.env.RESEND_AUDIENCE_ID, // Publicly accessible if needed
+    public: {
+    }
+  },
   css: ["~/assets/css/main.css"],
   site: {
     url: "https://parkingparents.com",
